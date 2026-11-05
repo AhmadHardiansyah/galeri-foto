@@ -12,7 +12,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../init";
 
-// Fungsi mengubah file gambar menjadi string Base64 (Data URL)
 const fileToBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -47,18 +46,23 @@ export const usePhotos = () => {
     return () => unsubscribe();
   }, []);
 
-  // ---------- CREATE (Simpan langsung ke Firestore tanpa perlu Storage) ----------
-  const createPhoto = useCallback(async (file, meta, onProgress) => {
+  // ---------- CREATE (Mendukung File maupun Data URL langsung) ----------
+  const createPhoto = useCallback(async (imageInput, meta, onProgress) => {
     if (onProgress) onProgress(40);
 
-    // Ubah gambar menjadi format data URL
-    const base64Data = await fileToBase64(file);
+    let dataUrl = '';
+    if (typeof imageInput === 'string' && imageInput.startsWith('data:image/')) {
+      dataUrl = imageInput;
+    } else {
+      dataUrl = await fileToBase64(imageInput);
+    }
+
     if (onProgress) onProgress(80);
 
     // Simpan dokumen ke Firestore
     await addDoc(collection(db, "photos"), {
       ...meta,
-      url: base64Data, // Data gambar tersimpan aman di Firestore
+      url: dataUrl,
       createdAt: new Date(),
     });
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { X, Camera, Check, Loader2, User, MapPin, Sparkles, MessageCircle, Mail, Share2 } from 'lucide-react';
-import imageCompression from 'browser-image-compression';
+import { compressImageToDataUrl } from '../utils/imageCompressor';
 
 export default function EditProfileModal({ profile, onClose, onSave }) {
   const [formData, setFormData] = useState({
@@ -27,23 +27,12 @@ export default function EditProfileModal({ profile, onClose, onSave }) {
     if (!file) return;
 
     try {
-      // Kompres avatar agar kecil dan hemat (< 100KB)
-      const options = {
-        maxSizeMB: 0.15,
-        maxWidthOrHeight: 500,
-        useWebWorker: true,
-      };
-      const compressed = await imageCompression(file, options);
-      
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        const base64 = ev.target.result;
-        setAvatarPreview(base64);
-        setFormData((prev) => ({ ...prev, avatarUrl: base64 }));
-      };
-      reader.readAsDataURL(compressed);
+      const compressedBase64 = await compressImageToDataUrl(file, 400, 0.8);
+      setAvatarPreview(compressedBase64);
+      setFormData((prev) => ({ ...prev, avatarUrl: compressedBase64 }));
     } catch (err) {
       console.error('Gagal kompres avatar:', err);
+      alert('Gagal memproses foto profil dari HP: ' + err.message);
     }
   };
 

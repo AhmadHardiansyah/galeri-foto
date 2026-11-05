@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { X, Upload, Image, Loader2, AlertTriangle, PlusCircle } from 'lucide-react';
-import { categories as defaultCategories } from '../data/photos';
-import imageCompression from 'browser-image-compression';
+import { X, Upload, Image, Loader2, AlertTriangle } from 'lucide-react';
+import { compressImageToDataUrl } from '../utils/imageCompressor';
 
 export default function UploadModal({ onClose, onUpload, availableCategories = [] }) {
   const [file, setFile] = useState(null);
@@ -43,9 +42,9 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
     if (!selected) return;
     setFile(selected);
     setErrorMessage('');
-    
+
     const originalMb = (selected.size / (1024 * 1024)).toFixed(2);
-    setFileSizeInfo(`Ukuran asli: ${originalMb} MB`);
+    setFileSizeInfo(`Ukuran asli: ${originalMb} MB (akan otomatis dioptimalkan)`);
 
     if (!meta.title) {
       setMeta((prev) => ({
@@ -53,7 +52,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
         title: selected.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
       }));
     }
-    
+
     const reader = new FileReader();
     reader.onload = (ev) => setPreview(ev.target.result);
     reader.readAsDataURL(selected);
@@ -81,7 +80,6 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
     if (!file) return alert('Pilih file foto terlebih dahulu.');
     if (!meta.title.trim()) return alert('Judul foto tidak boleh kosong.');
 
-    // Tentukan kategori final
     let finalCategory = selectedCategory;
     if (isCustomCategory) {
       if (!customCategoryName.trim()) {
@@ -92,30 +90,18 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
 
     setUploading(true);
     setErrorMessage('');
-    setProgress(10);
-    setStatusText('Mengoptimalkan kualitas dan ukuran foto...');
+    setProgress(15);
+    setStatusText('Mengompresi foto HP agar ringan & jernih...');
 
     try {
-      const options = {
-        maxSizeMB: 0.35,
-        maxWidthOrHeight: 1280,
-        useWebWorker: true,
-      };
+      // Kompresi native canvas yang 100% stabil di semua HP
+      const compressedDataUrl = await compressImageToDataUrl(file, 1200, 0.75);
 
-      let fileToUpload = file;
-      try {
-        fileToUpload = await imageCompression(file, options);
-        const finalKb = Math.round(fileToUpload.size / 1024);
-        setFileSizeInfo(`Optimal: ${finalKb} KB (Siap tampil jernih & cepat)`);
-      } catch (cErr) {
-        console.warn('Kompresi dilewati:', cErr);
-      }
-
-      setStatusText('Menyimpan ke database galeri...');
-      setProgress(50);
+      setProgress(60);
+      setStatusText('Menyimpan foto ke database galeri...');
 
       await onUpload(
-        fileToUpload,
+        compressedDataUrl,
         {
           ...meta,
           title: meta.title.trim(),
@@ -130,7 +116,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
       console.error('Upload Error:', err);
       let msg = err.message || 'Gagal menyimpan foto.';
       if (err.code === 'permission-denied') {
-        msg = 'Izin Firestore ditolak! Pastikan Rules di Cloud Firestore sudah: allow read, write: if true;';
+        msg = 'Izin Firestore ditolak! Pastikan Rules di Cloud Firestore: allow read, write: if true;';
       }
       setErrorMessage(msg);
     } finally {

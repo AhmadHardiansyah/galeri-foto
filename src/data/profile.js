@@ -8,7 +8,7 @@ export const profileData = {
   name: "Ahmad Hardiansyah",
   username: "matt",
   tagline: "",
-  bio: "Selamat datang di website pribadi saya, website ini untuk menyimpan foto bersama teman dan keluarga saya.",
+  bio: "Selamat datang di website pribadi saya, website ini hanya untuk menyimpan foto bersama teman dan keluarga saya.",
   avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
   location: "Bogor, Indonesia",
   status: "Mahasiwa",
