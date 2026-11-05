@@ -1,0 +1,128 @@
+// ==============================================================================
+// PANDUAN MENAMBAHKAN FOTO ANDA SENDIRI:
+// 1. Cara Termudah: Simpan file foto Anda di dalam folder: `public/photos/`
+//    Contoh nama file: `foto-1.jpg`, `foto-2.jpg`
+//    Lalu isi field `src: "/photos/foto-1.jpg"`
+// 2. Atau gunakan link gambar online langsung (Google Drive direct link, Cloudinary, Imgur, Unsplash, dll)
+// ==============================================================================
+
+export const categories = [
+  "Semua",
+  "Teman SMP",
+  "Teman SMK",
+  "Keluarga",
+  "Teman Rumah",
+  "Momen Spesial",
+];
+
+export const initialPhotos = [
+  {
+    id: 1,
+    title: "Golden Hour in Jakarta",
+    category: "Street",
+    src: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1200&q=80",
+    description: "Cahaya sore menyinari hiruk pikuk jalanan ibu kota.",
+    location: "Sudirman, Jakarta",
+    date: "Oktober 2024",
+    camera: "Sony A7IV • 35mm f/1.4",
+    aspect: "vertical", // 'vertical', 'horizontal', 'square'
+    likes: 42,
+  },
+  {
+    id: 2,
+    title: "Siluet Senja",
+    category: "Portrait",
+    src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80",
+    description: "Eksplorasi pencahayaan alami di penghujung hari.",
+    location: "Pantai Indah Kapuk",
+    date: "September 2024",
+    camera: "Fujifilm X-T4 • 56mm f/1.2",
+    aspect: "vertical",
+    likes: 89,
+  },
+  {
+    id: 3,
+    title: "Kabut Pagi di Perbukitan",
+    category: "Landscape",
+    src: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+    description: "Dinginnya embun dan ketenangan alam pegunungan.",
+    location: "Pangalengan, Jawa Barat",
+    date: "Agustus 2024",
+    camera: "Canon R6 • 24-70mm f/2.8",
+    aspect: "horizontal",
+    likes: 67,
+  },
+  {
+    id: 4,
+    title: "Neon Reflections",
+    category: "Street",
+    src: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80",
+    description: "Pantulan lampu neon di atas aspal basah setelah hujan gerimis.",
+    location: "Blok M, Jakarta Selatan",
+    date: "September 2024",
+    camera: "Sony A7IV • 50mm f/1.8",
+    aspect: "vertical",
+    likes: 124,
+  },
+  {
+    id: 5,
+    title: "Serenitas Kopi Pagi",
+    category: "Minimalist",
+    src: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=1200&q=80",
+    description: "Komposisi minimalis dan bayangan hangat di sudut kedai.",
+    location: "Dago, Bandung",
+    date: "Juli 2024",
+    camera: "Ricoh GR III • 28mm f/2.8",
+    aspect: "square",
+    likes: 53,
+  },
+  {
+    id: 6,
+    title: "Film Grain & Nostalgia",
+    category: "Moody / Film",
+    src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&q=80",
+    description: "Potret analog dengan nuansa vintage 35mm film Kodak Portra 400.",
+    location: "Kota Tua, Jakarta",
+    date: "Juni 2024",
+    camera: "Olympus OM-1 • Zuiko 50mm",
+    aspect: "vertical",
+    likes: 95,
+  },
+  {
+    id: 7,
+    title: "Lembah Bromo Membara",
+    category: "Landscape",
+    src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80",
+    description: "Panorama menakjubkan saat fajar mulai merekah di kaldera Bromo.",
+    location: "Gunung Bromo, Jawa Timur",
+    date: "Mei 2024",
+    camera: "Sony A7R V • 16-35mm f/2.8",
+    aspect: "horizontal",
+    likes: 210,
+  },
+  {
+    id: 8,
+    title: "Tatapan Cerita",
+    category: "Portrait",
+    src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=80",
+    description: "Ekspresi jujur dan emosi natural di bawah pencahayaan studio lembut.",
+    location: "Studio 21, Jakarta",
+    date: "November 2024",
+    camera: "Canon R5 • 85mm f/1.2",
+    aspect: "vertical",
+    likes: 112,
+  },
+  {
+    id: 9,
+    title: "Bayangan Geometri",
+    category: "Minimalist",
+    src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+    description: "Garis-garis arsitektur modern berpadu dengan langit biru jernih.",
+    location: "SCBD, Jakarta",
+    date: "Agustus 2024",
+    camera: "iPhone 15 Pro Max",
+    aspect: "square",
+    likes: 78,
+  },
+];
+
