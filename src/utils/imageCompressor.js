@@ -1,62 +1,99 @@
 // src/utils/imageCompressor.js
 /**
- * Kompresi gambar asli menggunakan HTML5 Canvas.
- * 100% stabil di semua HP (Android, iPhone, browser Instagram, Chrome, Safari).
- * Tidak bergantung pada Web Worker yang sering diblokir/gagal di HP.
- * Menjamin ukuran data foto selalu di kisaran ~150KB - 250KB (jauh di bawah batas 1MB Firestore).
+ * Kompresi gambar super stabil dan hemat memori untuk HP.
+ * Menggunakan URL.createObjectURL langsung ke elemen Canvas HTML5.
+ * Tidak membebani RAM HP dan langsung menghasilkan data JPEG ringan (~150KB).
  */
 export const compressImageToDataUrl = (file, maxDimension = 1200, quality = 0.75) => {
   return new Promise((resolve, reject) => {
-    if (!file || !file.type.startsWith('image/')) {
-      return reject(new Error('File yang dipilih bukan gambar yang valid.'));
+    if (!file) {
+      return reject(new Error('File foto tidak ditemukan.'));
     }
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onload = (event) => {
+    // 1. Coba menggunakan URL.createObjectURL (paling cepat dan hemat RAM di HP)
+    try {
+      const objectUrl = URL.createObjectURL(file);
       const img = new Image();
-      img.src = event.target.result;
 
       img.onload = () => {
-        let width = img.width;
-        let height = img.height;
+        try {
+          URL.revokeObjectURL(objectUrl); // Bebaskan memori
 
-        // Hitung skala baru jika dimensi foto lebih besar dari maxDimension
-        if (width > maxDimension || height > maxDimension) {
-          if (width > height) {
-            height = Math.round((height * maxDimension) / width);
-            width = maxDimension;
-          } else {
-            width = Math.round((width * maxDimension) / height);
-            height = maxDimension;
+          let width = img.width;
+          let height = img.height;
+
+          // Resize dimensi foto agar pas untuk layar HP & web
+          if (width > maxDimension || height > maxDimension) {
+            if (width > height) {
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
+            } else {
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
+            }
           }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            return reject(new Error('Perangkat tidak mendukung pemrosesan gambar.'));
+          }
+
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Output JPEG terkompresi (~150KB - 250KB)
+          const resultDataUrl = canvas.toDataURL('image/jpeg', quality);
+          resolve(resultDataUrl);
+        } catch (canvasErr) {
+          reject(new Error('Gagal meresize foto di canvas: ' + canvasErr.message));
         }
-
-        // Gambar ke canvas
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-
-        const ctx = canvas.getContext('2d');
-        if (!ctx) {
-          return resolve(event.target.result); // Fallback ke asli jika canvas gagal
-        }
-
-        ctx.drawImage(img, 0, 0, width, height);
-
-        // Export ke JPEG dengan kualitas terkompresi
-        const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
-        resolve(compressedDataUrl);
       };
 
       img.onerror = () => {
-        reject(new Error('Gagal memproses gambar dari HP. Coba format JPG/PNG lain.'));
+        URL.revokeObjectURL(objectUrl);
+        // 2. Fallback jika createObjectURL gagal (misal file sistem tertentu)
+        fallbackFileReader(file, maxDimension, quality, resolve, reject);
       };
-    };
 
-    reader.onerror = () => {
-      reject(new Error('Gagal membaca file dari HP.'));
-    };
+      img.src = objectUrl;
+    } catch (err) {
+      // 3. Fallback jika createObjectURL tidak didukung
+      fallbackFileReader(file, maxDimension, quality, resolve, reject);
+    }
   });
 };
+
+function fallbackFileReader(file, maxDimension, quality, resolve, reject) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      let width = img.width;
+      let height = img.height;
+
+      if (width > maxDimension || height > maxDimension) {
+        if (width > height) {
+          height = Math.round((height * maxDimension) / width);
+          width = maxDimension;
+        } else {
+          width = Math.round((width * maxDimension) / height);
+          height = maxDimension;
+        }
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+      resolve(canvas.toDataURL('image/jpeg', quality));
+    };
+    img.onerror = () => reject(new Error('Format foto tidak dapat diproses oleh browser HP.'));
+    img.src = e.target.result;
+  };
+  reader.onerror = () => reject(new Error('Memori HP tidak dapat membaca file ini. Silakan coba foto lain.'));
+  reader.readAsDataURL(file);
+}

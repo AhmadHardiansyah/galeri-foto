@@ -1,11 +1,14 @@
 import React, { useState, useRef } from 'react';
-import { X, Upload, Image, Loader2, AlertTriangle } from 'lucide-react';
+import { X, Upload, Image, Loader2, AlertTriangle, CheckCircle } from 'lucide-react';
 import { compressImageToDataUrl } from '../utils/imageCompressor';
 
 export default function UploadModal({ onClose, onUpload, availableCategories = [] }) {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [compressedDataUrl, setCompressedDataUrl] = useState('');
+  const [processingFile, setProcessingFile] = useState(false);
   const [fileSizeInfo, setFileSizeInfo] = useState('');
+
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [statusText, setStatusText] = useState('');
@@ -37,15 +40,16 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
   });
   const fileInputRef = useRef();
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const selected = e.target.files[0];
     if (!selected) return;
+
     setFile(selected);
     setErrorMessage('');
+    setProcessingFile(true);
+    setFileSizeInfo('Sedang mengompresi foto dari HP...');
 
-    const originalMb = (selected.size / (1024 * 1024)).toFixed(2);
-    setFileSizeInfo(`Ukuran asli: ${originalMb} MB (akan otomatis dioptimalkan)`);
-
+    // Auto-fill title from filename
     if (!meta.title) {
       setMeta((prev) => ({
         ...prev,
@@ -53,9 +57,20 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
       }));
     }
 
-    const reader = new FileReader();
-    reader.onload = (ev) => setPreview(ev.target.result);
-    reader.readAsDataURL(selected);
+    try {
+      // Langsung kompresi foto menggunakan Canvas native saat foto dipilih
+      const dataUrl = await compressImageToDataUrl(selected, 1200, 0.75);
+      setCompressedDataUrl(dataUrl);
+      setPreview(dataUrl);
+      const approxKb = Math.round((dataUrl.length * 3) / 4 / 1024);
+      setFileSizeInfo(`Foto siap! Dioptimalkan jadi ${approxKb} KB (Jernih & Hemat)`);
+    } catch (err) {
+      console.error('File processing error:', err);
+      setErrorMessage(err.message || 'Gagal membaca foto dari galeri HP. Coba pilih foto lain.');
+      setFileSizeInfo('');
+    } finally {
+      setProcessingFile(false);
+    }
   };
 
   const handleDrop = (e) => {
@@ -77,8 +92,12 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file) return alert('Pilih file foto terlebih dahulu.');
-    if (!meta.title.trim()) return alert('Judul foto tidak boleh kosong.');
+    if (!compressedDataUrl) {
+      return alert('Harap pilih foto terlebih dahulu.');
+    }
+    if (!meta.title.trim()) {
+      return alert('Judul foto tidak boleh kosong.');
+    }
 
     let finalCategory = selectedCategory;
     if (isCustomCategory) {
@@ -90,16 +109,10 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
 
     setUploading(true);
     setErrorMessage('');
-    setProgress(15);
-    setStatusText('Mengompresi foto HP agar ringan & jernih...');
+    setProgress(50);
+    setStatusText('Menyimpan ke database galeri...');
 
     try {
-      // Kompresi native canvas yang 100% stabil di semua HP
-      const compressedDataUrl = await compressImageToDataUrl(file, 1200, 0.75);
-
-      setProgress(60);
-      setStatusText('Menyimpan foto ke database galeri...');
-
       await onUpload(
         compressedDataUrl,
         {
@@ -111,7 +124,6 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
           setProgress(prog);
         }
       );
-
     } catch (err) {
       console.error('Upload Error:', err);
       let msg = err.message || 'Gagal menyimpan foto.';
@@ -127,7 +139,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in"
-      onClick={!uploading ? onClose : undefined}
+      onClick={!uploading && !processingFile ? onClose : undefined}
     >
       <div
         className="bg-white dark:bg-zinc-900 rounded-2xl w-full max-w-lg shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden"
@@ -139,7 +151,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
             <Upload className="w-4 h-4 text-rose-500" />
             <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">Upload Foto Baru</h2>
           </div>
-          {!uploading && (
+          {!uploading && !processingFile && (
             <button
               onClick={onClose}
               className="p-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 transition-colors"
@@ -164,15 +176,20 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
           <div
             className={`relative flex flex-col items-center justify-center border-2 border-dashed rounded-xl transition-colors cursor-pointer overflow-hidden ${
               preview
-                ? 'border-rose-400 dark:border-rose-500'
+                ? 'border-emerald-500 dark:border-emerald-500'
                 : 'border-zinc-300 dark:border-zinc-700 hover:border-rose-400 dark:hover:border-rose-500'
             }`}
             style={{ minHeight: 150 }}
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
-            onClick={() => !uploading && fileInputRef.current?.click()}
+            onClick={() => !uploading && !processingFile && fileInputRef.current?.click()}
           >
-            {preview ? (
+            {processingFile ? (
+              <div className="py-8 flex flex-col items-center gap-2 text-rose-500">
+                <Loader2 className="w-8 h-8 animate-spin" />
+                <p className="text-xs font-semibold">Sedang mengompresi foto dari HP...</p>
+              </div>
+            ) : preview ? (
               <>
                 <img src={preview} alt="preview" className="w-full max-h-48 object-cover" />
                 {!uploading && (
@@ -193,14 +210,15 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
               type="file"
               accept="image/*"
               className="hidden"
-              disabled={uploading}
+              disabled={uploading || processingFile}
               onChange={handleFileChange}
             />
           </div>
 
           {fileSizeInfo && (
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 text-center font-medium">
-              {fileSizeInfo}
+            <p className="text-[11px] text-emerald-600 dark:text-emerald-400 text-center font-medium flex items-center justify-center gap-1">
+              <CheckCircle className="w-3.5 h-3.5" />
+              <span>{fileSizeInfo}</span>
             </p>
           )}
 
@@ -211,7 +229,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
             </label>
             <input
               type="text"
-              disabled={uploading}
+              disabled={uploading || processingFile}
               value={meta.title}
               onChange={(e) => setMeta({ ...meta, title: e.target.value })}
               placeholder="Contoh: Bukber bareng anak SMK / Liburan keluarga"
@@ -227,7 +245,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
                   Kelompok Foto
                 </label>
                 <select
-                  disabled={uploading}
+                  disabled={uploading || processingFile}
                   value={isCustomCategory ? '__custom__' : selectedCategory}
                   onChange={(e) => handleCategorySelect(e.target.value)}
                   className="w-full px-3 py-2 text-xs rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-rose-500/50 disabled:opacity-60"
@@ -246,7 +264,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
                   Orientasi Tampilan
                 </label>
                 <select
-                  disabled={uploading}
+                  disabled={uploading || processingFile}
                   value={meta.aspect}
                   onChange={(e) => setMeta({ ...meta, aspect: e.target.value })}
                   className="w-full px-3 py-2 text-xs rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-rose-500/50 disabled:opacity-60"
@@ -267,7 +285,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
                 <input
                   type="text"
                   autoFocus
-                  disabled={uploading}
+                  disabled={uploading || processingFile}
                   value={customCategoryName}
                   onChange={(e) => setCustomCategoryName(e.target.value)}
                   placeholder="Contoh: Teman Kuliah, Acara Sekolah, Liburan Bali..."
@@ -284,7 +302,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
             </label>
             <input
               type="text"
-              disabled={uploading}
+              disabled={uploading || processingFile}
               value={meta.location}
               onChange={(e) => setMeta({ ...meta, location: e.target.value })}
               placeholder="Contoh: Puncak, Bogor / Sekolah / Rumah"
@@ -298,7 +316,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
               Cerita / Kenangan (Opsional)
             </label>
             <textarea
-              disabled={uploading}
+              disabled={uploading || processingFile}
               value={meta.description}
               onChange={(e) => setMeta({ ...meta, description: e.target.value })}
               placeholder="Ceritakan momen seru di foto ini..."
@@ -317,7 +335,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
               <div className="w-full h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-rose-500 to-purple-500 transition-all duration-300 rounded-full"
-                  style={{ width: `${Math.max(progress, 15)}%` }}
+                  style={{ width: `${Math.max(progress, 20)}%` }}
                 />
               </div>
             </div>
@@ -326,13 +344,18 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
           {/* Submit */}
           <button
             type="submit"
-            disabled={uploading || !file}
+            disabled={uploading || processingFile || !compressedDataUrl}
             className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold text-white bg-rose-500 hover:bg-rose-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md shadow-rose-500/20 active:scale-[0.99]"
           >
             {uploading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
                 <span>Menyimpan Foto...</span>
+              </>
+            ) : processingFile ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Memproses Foto HP...</span>
               </>
             ) : (
               <>
