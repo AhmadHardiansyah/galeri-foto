@@ -1,0 +1,138 @@
+// src/data/favoriteMusic.js
+// Daftar musisi, band, dan lagu favorit Ahmad Hardiansyah.
+// Anda dapat mengubah, menambah, atau menghapus daftar ini kapan saja sesuai selera Anda!
+
+export const musicProfile = {
+  headline: "Musik & Band Favorit",
+  bio: "Musik yang selalu menemani di kala santai, nugas, coding, maupun dalam perjalanan.",
+  spotifyProfileUrl: "https://open.spotify.com",
+  // Ganti link iframe embed di bawah jika punya playlist Spotify sendiri
+  // Cara: Di Spotify -> Share -> Embed playlist -> Salin URL src iframe-nya
+  spotifyEmbedUrl: "https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator&theme=0",
+};
+
+export const favoriteBands = [
+  {
+    id: 'b1',
+    name: 'Sheila on 7',
+    genre: 'Pop Rock / Nostalgia',
+    origin: 'Yogyakarta, Indonesia',
+    image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80',
+    topSongs: ['Dan...', 'Sephia', 'Hari Bersamanya', 'Melompat Lebih Tinggi'],
+    quote: 'Lagu-lagu yang ga pernah lekang oleh waktu dari masa sekolah.',
+    spotifyUrl: 'https://open.spotify.com/artist/6b01JBE94G1mUq3W6i1N48',
+  },
+  {
+    id: 'b2',
+    name: 'Hindia',
+    genre: 'Indie Rock / Alternative',
+    origin: 'Jakarta, Indonesia',
+    image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80',
+    topSongs: ['Evaluasi', 'Rumah ke Rumah', 'Membasuh', 'Secukupnya'],
+    quote: 'Liriknya selalu relate dengan kehidupan sehari-hari.',
+    spotifyUrl: 'https://open.spotify.com/artist/05hOBzLqL9v272L500O96f',
+  },
+  {
+    id: 'b3',
+    name: 'Coldplay',
+    genre: 'Alternative Rock / Pop',
+    origin: 'London, UK',
+    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80',
+    topSongs: ['Yellow', 'Fix You', 'The Scientist', 'Viva La Vida'],
+    quote: 'Vibes konser dan melodinya selalu bikin tenang dan semangat.',
+    spotifyUrl: 'https://open.spotify.com/artist/4gzpq5DPGxSnKTe4SA8HAU',
+  },
+  {
+    id: 'b4',
+    name: 'Arctic Monkeys',
+    genre: 'Indie Rock / Post-Punk',
+    origin: 'Sheffield, UK',
+    image: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80',
+    topSongs: ['Do I Wanna Know?', '505', 'Why\'d You Only Call Me When You\'re High?', 'I Wanna Be Yours'],
+    quote: 'Riff gitar dan bassline yang ikonik banget.',
+    spotifyUrl: 'https://open.spotify.com/artist/7Ln80tUS6He07XvHI8qqHH',
+  },
+  {
+    id: 'b5',
+    name: 'Dewa 19',
+    genre: 'Classic Rock / Pop Rock',
+    origin: 'Surabaya, Indonesia',
+    image: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=600&q=80',
+    topSongs: ['Kangen', 'Pupus', 'Risalah Hati', 'Separuh Nafas'],
+    quote: 'Aransemen legendaris era 90-an & 2000-an.',
+    spotifyUrl: 'https://open.spotify.com/artist/0bE1jCjA2n2H0q6eR140p8',
+  },
+  {
+    id: 'b6',
+    name: 'The 1975',
+    genre: 'Indie Pop / Synth-pop',
+    origin: 'Manchester, UK',
+    image: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80',
+    topSongs: ['Somebody Else', 'About You', 'Robbers', 'It\'s Not Living'],
+    quote: 'Nuansa synth dan vokal dreamy yang pas buat malam hari.',
+    spotifyUrl: 'https://open.spotify.com/artist/3mIj9lX22qpRMiIQEvRq3W',
+  },
+];
+
+export const favoriteTracks = [
+  {
+    id: 't1',
+    title: 'Evaluasi',
+    artist: 'Hindia',
+    album: 'Menari dengan Bayangan',
+    year: '2019',
+    cover: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=300&q=80',
+    spotifyUrl: 'https://open.spotify.com/track/4W4WlA2f3iYQcE0Nl1Q7Bf',
+    tag: 'Healing',
+  },
+  {
+    id: 't2',
+    title: 'Dan...',
+    artist: 'Sheila on 7',
+    album: 'Sheila on 7',
+    year: '1999',
+    cover: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?auto=format&fit=crop&w=300&q=80',
+    spotifyUrl: 'https://open.spotify.com/track/1a2b3c4d',
+    tag: 'Nostalgia',
+  },
+  {
+    id: 't3',
+    title: 'Yellow',
+    artist: 'Coldplay',
+    album: 'Parachutes',
+    year: '2000',
+    cover: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=300&q=80',
+    spotifyUrl: 'https://open.spotify.com/track/3AJwUDP919kvQ9QcozQPxg',
+    tag: 'Classic',
+  },
+  {
+    id: 't4',
+    title: '505',
+    artist: 'Arctic Monkeys',
+    album: 'Favourite Worst Nightmare',
+    year: '2007',
+    cover: 'https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?auto=format&fit=crop&w=300&q=80',
+    spotifyUrl: 'https://open.spotify.com/track/0BxE4Fqr5PU9vTuoAJJW5W',
+    tag: 'Late Night',
+  },
+  {
+    id: 't5',
+    title: 'About You',
+    artist: 'The 1975',
+    album: 'Being Funny in a Foreign Language',
+    year: '2022',
+    cover: 'https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=300&q=80',
+    spotifyUrl: 'https://open.spotify.com/track/1k2b3c',
+    tag: 'Dreamy',
+  },
+  {
+    id: 't6',
+    title: 'Risalah Hati',
+    artist: 'Dewa 19',
+    album: 'Bintang Lima',
+    year: '2000',
+    cover: 'https://images.unsplash.com/photo-1445985543468-394eb6bcdefc?auto=format&fit=crop&w=300&q=80',
+    spotifyUrl: 'https://open.spotify.com/track/2b3c4d',
+    tag: 'Galau Vibes',
+  },
+];

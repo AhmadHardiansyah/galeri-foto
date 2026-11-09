@@ -8,9 +8,9 @@ import LoginModal from './components/LoginModal';
 import EditProfileModal from './components/EditProfileModal';
 import SplashScreen from './components/SplashScreen';
 import Guestbook from './components/Guestbook';
-import MusicPlayer from './components/MusicPlayer';
+import FavoriteMusic from './components/FavoriteMusic';
 import Footer from './components/Footer';
-import { ImageOff, Upload, Camera, MessageCircle } from 'lucide-react';
+import { ImageOff, Upload, Camera, MessageCircle, Music } from 'lucide-react';
 import { usePhotos } from './firebase/hooks/usePhotos';
 import { useProfile } from './firebase/hooks/useProfile';
 import { useGuestbook } from './firebase/hooks/useGuestbook';
@@ -218,13 +218,13 @@ export default function App() {
         />
 
         {/* ========================================================================= */}
-        {/* TAB SWITCHER: Galeri Foto VS Buku Tamu */}
+        {/* TAB SWITCHER: Galeri Foto VS Buku Tamu VS Musik Favorit */}
         {/* ========================================================================= */}
         <div className="flex justify-center mb-6 px-4">
-          <div className="inline-flex p-1 bg-zinc-200/70 dark:bg-zinc-900/90 border border-zinc-300/60 dark:border-zinc-800 rounded-full shadow-inner backdrop-blur">
+          <div className="inline-flex p-1 bg-zinc-200/70 dark:bg-zinc-900/90 border border-zinc-300/60 dark:border-zinc-800 rounded-full shadow-inner backdrop-blur flex-wrap justify-center gap-1">
             <button
               onClick={() => setActiveTab('gallery')}
-              className={`flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold transition-all ${
+              className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all ${
                 activeTab === 'gallery'
                   ? 'bg-white dark:bg-zinc-800 text-rose-500 shadow-md scale-100'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
@@ -243,7 +243,7 @@ export default function App() {
 
             <button
               onClick={() => setActiveTab('guestbook')}
-              className={`flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold transition-all ${
+              className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all ${
                 activeTab === 'guestbook'
                   ? 'bg-white dark:bg-zinc-800 text-rose-500 shadow-md scale-100'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
@@ -253,6 +253,21 @@ export default function App() {
               <span>Buku Tamu</span>
               <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-rose-500 text-white animate-pulse">
                 {guestMessages.length}
+              </span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('music')}
+              className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all ${
+                activeTab === 'music'
+                  ? 'bg-white dark:bg-zinc-800 text-rose-500 shadow-md scale-100'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+              }`}
+            >
+              <Music className="w-3.5 h-3.5" />
+              <span>Musik & Band</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-gradient-to-r from-emerald-500 to-teal-500 text-white">
+                Spotify
               </span>
             </button>
           </div>
@@ -372,6 +387,13 @@ export default function App() {
           />
         )}
 
+        {/* ========================================================================= */}
+        {/* VIEW 3: MUSIK & BAND FAVORIT */}
+        {/* ========================================================================= */}
+        {activeTab === 'music' && (
+          <FavoriteMusic />
+        )}
+
         {/* Lightbox Modal */}
         {selectedPhoto && (
           <LightboxModal
@@ -410,9 +432,6 @@ export default function App() {
             onSave={updateProfile}
           />
         )}
-
-        {/* Floating Mini Music Player */}
-        <MusicPlayer />
 
         <Footer />
 
