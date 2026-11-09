@@ -17,11 +17,12 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
   // Gabungkan kategori yang ada (tanpa 'Semua')
   const categoryOptions = Array.from(
     new Set([
-      'Teman SMP',
-      'Teman SMK',
-      'Keluarga',
-      'Teman Rumah',
-      'Momen Spesial',
+      'SMP',
+      'SMK',
+      'Family',
+      'Rumah',
+      'Momen',
+      'Kampus',
       ...availableCategories.filter((c) => c !== 'Semua'),
     ])
   );
@@ -174,11 +175,10 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
 
           {/* Drag & Drop / File Picker */}
           <div
-            className={`relative flex flex-col items-center justify-center border-2 border-dashed rounded-xl transition-colors cursor-pointer overflow-hidden ${
-              preview
-                ? 'border-emerald-500 dark:border-emerald-500'
-                : 'border-zinc-300 dark:border-zinc-700 hover:border-rose-400 dark:hover:border-rose-500'
-            }`}
+            className={`relative flex flex-col items-center justify-center border-2 border-dashed rounded-xl transition-colors cursor-pointer overflow-hidden ${preview
+              ? 'border-emerald-500 dark:border-emerald-500'
+              : 'border-zinc-300 dark:border-zinc-700 hover:border-rose-400 dark:hover:border-rose-500'
+              }`}
             style={{ minHeight: 150 }}
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}

@@ -7,15 +7,28 @@ import UploadModal from './components/UploadModal';
 import LoginModal from './components/LoginModal';
 import EditProfileModal from './components/EditProfileModal';
 import SplashScreen from './components/SplashScreen';
+import Guestbook from './components/Guestbook';
+import MusicPlayer from './components/MusicPlayer';
 import Footer from './components/Footer';
-import { ImageOff, Upload } from 'lucide-react';
+import { ImageOff, Upload, Camera, MessageCircle } from 'lucide-react';
 import { usePhotos } from './firebase/hooks/usePhotos';
 import { useProfile } from './firebase/hooks/useProfile';
+import { useGuestbook } from './firebase/hooks/useGuestbook';
 import { auth, onAuthStateChanged, logoutAdmin } from './firebase/init';
 
 export default function App() {
-  const { photos, loading, createPhoto, updatePhoto, deletePhoto } = usePhotos();
+  const { photos, loading: photosLoading, createPhoto, updatePhoto, deletePhoto } = usePhotos();
   const { profile, updateProfile } = useProfile();
+  const {
+    messages: guestMessages,
+    loading: guestLoading,
+    addMessage: sendGuestMessage,
+    deleteMessage: deleteGuestMessage,
+    likeMessage: likeGuestMessage,
+  } = useGuestbook();
+
+  // Tab State: 'gallery' | 'guestbook'
+  const [activeTab, setActiveTab] = useState('gallery');
 
   const [activeCategory, setActiveCategory] = useState('Semua');
   const [searchQuery, setSearchQuery] = useState('');
@@ -186,99 +199,160 @@ export default function App() {
           onEditProfile={() => setShowEditProfileModal(true)}
         />
 
-        {/* Admin upload button (HANYA MUNCUL JIKA PEMILIK SUDAH LOGIN) */}
-        {currentUser && (
-          <div className="flex justify-center mb-5 animate-fade-in">
+        {/* ========================================================================= */}
+        {/* TAB SWITCHER: Galeri Foto VS Buku Tamu */}
+        {/* ========================================================================= */}
+        <div className="flex justify-center mb-6 px-4">
+          <div className="inline-flex p-1 bg-zinc-200/70 dark:bg-zinc-900/90 border border-zinc-300/60 dark:border-zinc-800 rounded-full shadow-inner backdrop-blur">
             <button
-              onClick={() => setShowUploadModal(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white text-sm font-semibold rounded-full shadow-lg shadow-rose-500/25 transition-all duration-200 transform active:scale-95"
+              onClick={() => setActiveTab('gallery')}
+              className={`flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold transition-all ${
+                activeTab === 'gallery'
+                  ? 'bg-white dark:bg-zinc-800 text-rose-500 shadow-md scale-100'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+              }`}
             >
-              <Upload className="w-4 h-4" />
-              Upload Foto Baru (Admin)
+              <Camera className="w-3.5 h-3.5" />
+              <span>Galeri Foto</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                activeTab === 'gallery'
+                  ? 'bg-rose-500/10 text-rose-500'
+                  : 'bg-zinc-300/60 dark:bg-zinc-800 text-zinc-500'
+              }`}>
+                {photos.length}
+              </span>
             </button>
+
+            <button
+              onClick={() => setActiveTab('guestbook')}
+              className={`flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold transition-all ${
+                activeTab === 'guestbook'
+                  ? 'bg-white dark:bg-zinc-800 text-rose-500 shadow-md scale-100'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+              }`}
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              <span>Buku Tamu</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-rose-500 text-white animate-pulse">
+                {guestMessages.length}
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* VIEW 1: GALERI FOTO */}
+        {/* ========================================================================= */}
+        {activeTab === 'gallery' && (
+          <div className="animate-fade-in">
+            {/* Admin upload button (HANYA MUNCUL JIKA PEMILIK SUDAH LOGIN) */}
+            {currentUser && (
+              <div className="flex justify-center mb-5">
+                <button
+                  onClick={() => setShowUploadModal(true)}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white text-sm font-semibold rounded-full shadow-lg shadow-rose-500/25 transition-all duration-200 transform active:scale-95"
+                >
+                  <Upload className="w-4 h-4" />
+                  Upload Foto Baru (Admin)
+                </button>
+              </div>
+            )}
+
+            {/* Filter & Layout Controls */}
+            <CategoryFilter
+              activeCategory={activeCategory}
+              setActiveCategory={setActiveCategory}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              layoutMode={layoutMode}
+              setLayoutMode={setLayoutMode}
+              categories={allCategories}
+              categoryCounts={categoryCounts}
+            />
+
+            {/* Gallery Grid */}
+            <main className="max-w-5xl mx-auto px-4">
+              {photosLoading ? (
+                <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+                  {[...Array(6)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="break-inside-avoid rounded-2xl bg-zinc-200 dark:bg-zinc-800 animate-pulse"
+                      style={{ height: i % 2 === 0 ? 280 : 200 }}
+                    />
+                  ))}
+                </div>
+              ) : filteredPhotos.length === 0 ? (
+                <div className="py-20 text-center">
+                  <div className="inline-flex p-4 rounded-full bg-zinc-100 dark:bg-zinc-900 mb-3 text-zinc-400">
+                    <ImageOff className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-base font-semibold text-zinc-700 dark:text-zinc-300">
+                    {photos.length === 0 ? 'Belum ada foto dalam galeri.' : 'Tidak ada foto ditemukan'}
+                  </h3>
+                  <p className="text-xs text-zinc-500 mt-1">
+                    {photos.length === 0 && currentUser
+                      ? 'Klik tombol "Upload Foto Baru (Admin)" di atas.'
+                      : 'Coba gunakan kata kunci lain atau pilih kategori "Semua".'}
+                  </p>
+                  {photos.length > 0 && (
+                    <button
+                      onClick={() => { setActiveCategory('Semua'); setSearchQuery(''); }}
+                      className="mt-4 px-4 py-1.5 text-xs font-medium rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-colors"
+                    >
+                      Reset Filter
+                    </button>
+                  )}
+                </div>
+              ) : layoutMode === 'masonry' ? (
+                <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance] space-y-4">
+                  {filteredPhotos.map((photo) => (
+                    <div key={photo.id} className="break-inside-avoid">
+                      <PhotoCard
+                        photo={photo}
+                        onOpenLightbox={handleOpenLightbox}
+                        onDelete={handleDelete}
+                        layoutMode={layoutMode}
+                        isLiked={!!likedPhotos[photo.id]}
+                        onToggleLike={handleToggleLike}
+                        isAdmin={!!currentUser}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                  {filteredPhotos.map((photo) => (
+                    <PhotoCard
+                      key={photo.id}
+                      photo={photo}
+                      onOpenLightbox={handleOpenLightbox}
+                      onDelete={handleDelete}
+                      layoutMode={layoutMode}
+                      isLiked={!!likedPhotos[photo.id]}
+                      onToggleLike={handleToggleLike}
+                      isAdmin={!!currentUser}
+                    />
+                  ))}
+                </div>
+              )}
+            </main>
           </div>
         )}
 
-        {/* Filter & Layout Controls */}
-        <CategoryFilter
-          activeCategory={activeCategory}
-          setActiveCategory={setActiveCategory}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          layoutMode={layoutMode}
-          setLayoutMode={setLayoutMode}
-          categories={allCategories}
-          categoryCounts={categoryCounts}
-        />
-
-        {/* Gallery Grid */}
-        <main className="max-w-5xl mx-auto px-4">
-          {loading ? (
-            /* Loading skeleton */
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-              {[...Array(6)].map((_, i) => (
-                <div
-                  key={i}
-                  className="break-inside-avoid rounded-2xl bg-zinc-200 dark:bg-zinc-800 animate-pulse"
-                  style={{ height: i % 2 === 0 ? 280 : 200 }}
-                />
-              ))}
-            </div>
-          ) : filteredPhotos.length === 0 ? (
-            <div className="py-20 text-center">
-              <div className="inline-flex p-4 rounded-full bg-zinc-100 dark:bg-zinc-900 mb-3 text-zinc-400">
-                <ImageOff className="w-8 h-8" />
-              </div>
-              <h3 className="text-base font-semibold text-zinc-700 dark:text-zinc-300">
-                {photos.length === 0 ? 'Belum ada foto dalam galeri.' : 'Tidak ada foto ditemukan'}
-              </h3>
-              <p className="text-xs text-zinc-500 mt-1">
-                {photos.length === 0 && currentUser
-                  ? 'Klik tombol "Upload Foto Baru (Admin)" di atas.'
-                  : 'Coba gunakan kata kunci lain atau pilih kategori "Semua".'}
-              </p>
-              {photos.length > 0 && (
-                <button
-                  onClick={() => { setActiveCategory('Semua'); setSearchQuery(''); }}
-                  className="mt-4 px-4 py-1.5 text-xs font-medium rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-colors"
-                >
-                  Reset Filter
-                </button>
-              )}
-            </div>
-          ) : layoutMode === 'masonry' ? (
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance] space-y-4">
-              {filteredPhotos.map((photo) => (
-                <div key={photo.id} className="break-inside-avoid">
-                  <PhotoCard
-                    photo={photo}
-                    onOpenLightbox={handleOpenLightbox}
-                    onDelete={handleDelete}
-                    layoutMode={layoutMode}
-                    isLiked={!!likedPhotos[photo.id]}
-                    onToggleLike={handleToggleLike}
-                    isAdmin={!!currentUser}
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-              {filteredPhotos.map((photo) => (
-                <PhotoCard
-                  key={photo.id}
-                  photo={photo}
-                  onOpenLightbox={handleOpenLightbox}
-                  onDelete={handleDelete}
-                  layoutMode={layoutMode}
-                  isLiked={!!likedPhotos[photo.id]}
-                  onToggleLike={handleToggleLike}
-                  isAdmin={!!currentUser}
-                />
-              ))}
-            </div>
-          )}
-        </main>
+        {/* ========================================================================= */}
+        {/* VIEW 2: BUKU TAMU (GUESTBOOK) */}
+        {/* ========================================================================= */}
+        {activeTab === 'guestbook' && (
+          <Guestbook
+            messages={guestMessages}
+            loading={guestLoading}
+            onSendMessage={sendGuestMessage}
+            onDeleteMessage={deleteGuestMessage}
+            onLikeMessage={likeGuestMessage}
+            isAdmin={!!currentUser}
+          />
+        )}
 
         {/* Lightbox Modal */}
         {selectedPhoto && (
@@ -318,6 +392,9 @@ export default function App() {
             onSave={updateProfile}
           />
         )}
+
+        {/* Floating Mini Music Player */}
+        <MusicPlayer />
 
         <Footer />
 
