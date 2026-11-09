@@ -14,7 +14,8 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
   const [statusText, setStatusText] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Gabungkan kategori yang ada (tanpa 'Semua')
+  // Gabungkan kategori yang ada (tanpa 'Semua' dan tanpa label lama)
+  const legacyLabels = ['Semua', 'Teman SMP', 'Teman SMK', 'Keluarga', 'Teman Rumah', 'Momen Spesial'];
   const categoryOptions = Array.from(
     new Set([
       'SMP',
@@ -23,11 +24,11 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
       'Rumah',
       'Momen',
       'Kampus',
-      ...availableCategories.filter((c) => c !== 'Semua'),
+      ...availableCategories.filter((c) => !legacyLabels.includes(c)),
     ])
   );
 
-  const [selectedCategory, setSelectedCategory] = useState(categoryOptions[0] || 'Keluarga');
+  const [selectedCategory, setSelectedCategory] = useState(categoryOptions[0] || 'SMP');
   const [isCustomCategory, setIsCustomCategory] = useState(false);
   const [customCategoryName, setCustomCategoryName] = useState('');
 

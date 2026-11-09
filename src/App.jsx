@@ -123,27 +123,45 @@ export default function App() {
     }
   };
 
+  // Pemetaan kategori lama ke nama baru agar selalu sinkron
+  const normalizedPhotos = useMemo(() => {
+    const categoryMap = {
+      'Teman SMP': 'SMP',
+      'Teman SMK': 'SMK',
+      'Keluarga': 'Family',
+      'Teman Rumah': 'Rumah',
+      'Momen Spesial': 'Momen',
+    };
+    return photos.map((p) => ({
+      ...p,
+      category: categoryMap[p.category] || p.category,
+    }));
+  }, [photos]);
+
   // Gabungan semua kategori (bawaan + kategori baru yang pernah diupload)
   const allCategories = useMemo(() => {
-    const defaultList = ['Semua', 'Teman SMP', 'Teman SMK', 'Keluarga', 'Teman Rumah', 'Momen Spesial'];
-    const fromPhotos = photos.map((p) => p.category).filter(Boolean);
+    const defaultList = ['Semua', 'SMP', 'SMK', 'Family', 'Rumah', 'Momen', 'Kampus'];
+    const legacyList = ['Teman SMP', 'Teman SMK', 'Keluarga', 'Teman Rumah', 'Momen Spesial'];
+    const fromPhotos = normalizedPhotos
+      .map((p) => p.category)
+      .filter((c) => Boolean(c) && !legacyList.includes(c));
     return Array.from(new Set([...defaultList, ...fromPhotos]));
-  }, [photos]);
+  }, [normalizedPhotos]);
 
   // Jumlah foto di setiap kelompok / kategori
   const categoryCounts = useMemo(() => {
-    const counts = { Semua: photos.length };
-    photos.forEach((p) => {
+    const counts = { Semua: normalizedPhotos.length };
+    normalizedPhotos.forEach((p) => {
       if (p.category) {
         counts[p.category] = (counts[p.category] || 0) + 1;
       }
     });
     return counts;
-  }, [photos]);
+  }, [normalizedPhotos]);
 
   // Filtered photos based on Category and Search
   const filteredPhotos = useMemo(() => {
-    return photos.filter((photo) => {
+    return normalizedPhotos.filter((photo) => {
       const matchCategory =
         activeCategory === 'Semua' || photo.category === activeCategory;
       const q = searchQuery.toLowerCase().trim();
@@ -155,7 +173,7 @@ export default function App() {
         (photo.category && photo.category.toLowerCase().includes(q));
       return matchCategory && matchSearch;
     });
-  }, [photos, activeCategory, searchQuery]);
+  }, [normalizedPhotos, activeCategory, searchQuery]);
 
   // Total likes count
   const totalLikes = useMemo(() => {

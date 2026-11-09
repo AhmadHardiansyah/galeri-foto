@@ -20,3 +20,4 @@ export const playlist = [
     src: "https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3",
   },
 ];
+

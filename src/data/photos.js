@@ -8,11 +8,12 @@
 
 export const categories = [
   "Semua",
-  "Teman SMP",
-  "Teman SMK",
-  "Keluarga",
-  "Teman Rumah",
-  "Momen Spesial",
+  "SMP",
+  "SMK",
+  "Family",
+  "Rumah",
+  "Momen",
+  "Kampus",
 ];
 
 export const initialPhotos = [
