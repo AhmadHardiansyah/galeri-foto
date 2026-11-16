@@ -38,16 +38,8 @@ export default function SplashScreen({ onFinish }) {
     >
       {/* Background ambient cute pastel glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-gradient-to-tr from-pink-500/25 via-rose-400/20 to-purple-500/20 blur-[130px] rounded-full animate-aurora-1" />
-        <div className="absolute bottom-1/4 right-1/4 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] bg-gradient-to-bl from-purple-500/25 via-indigo-400/15 to-pink-500/15 blur-[120px] rounded-full animate-aurora-2" />
-
-        {/* Floating cute doodles */}
-        <span className="absolute top-12 left-10 text-2xl animate-float opacity-70">🌸</span>
-        <span className="absolute top-24 right-14 text-xl animate-float opacity-60" style={{ animationDelay: '1s' }}>✨</span>
-        <span className="absolute bottom-16 left-16 text-xl animate-float opacity-60" style={{ animationDelay: '2s' }}>🐾</span>
-        <span className="absolute bottom-20 right-12 text-2xl animate-float opacity-70" style={{ animationDelay: '1.5s' }}>🍡</span>
-        <span className="absolute top-1/2 left-6 text-lg animate-float opacity-40" style={{ animationDelay: '2.5s' }}>☁️</span>
-        <span className="absolute top-1/3 right-8 text-lg animate-float opacity-50" style={{ animationDelay: '0.8s' }}>💖</span>
+        <div className="absolute top-1/4 left-1/4 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-gradient-to-tr from-pink-500/20 via-rose-400/15 to-purple-500/15 blur-[130px] rounded-full animate-aurora-1" />
+        <div className="absolute bottom-1/4 right-1/4 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] bg-gradient-to-bl from-purple-500/20 via-indigo-400/15 to-pink-500/15 blur-[120px] rounded-full animate-aurora-2" />
       </div>
 
       {/* Main Content */}
@@ -61,7 +53,7 @@ export default function SplashScreen({ onFinish }) {
         {/* Animated Cute Mascot: Adorable Cat/Bear with Camera & Rosy Cheeks */}
         <div className="relative mb-5 animate-bounce-soft">
           {/* Soft cute glow behind mascot */}
-          <div className="absolute -inset-3 bg-gradient-to-tr from-pink-400 via-rose-400 to-purple-400 rounded-full blur-xl opacity-50 animate-pulse-glow" />
+          <div className="absolute -inset-3 bg-gradient-to-tr from-pink-400 via-rose-400 to-purple-400 rounded-full blur-xl opacity-40 animate-pulse-glow" />
 
           <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-b from-[#241a38] to-[#161226] border-2 border-pink-400/40 shadow-2xl flex items-center justify-center p-2.5">
             <svg
@@ -99,28 +91,25 @@ export default function SplashScreen({ onFinish }) {
                 <circle cx="28" cy="6" r="2" fill="#fff" />
               </g>
             </svg>
-
-            {/* Sparkle badge */}
-            <span className="absolute -top-1 -right-1 text-base animate-wiggle">✨</span>
           </div>
         </div>
 
-        {/* Cute Pill Greeting */}
+        {/* Clean Pill Greeting */}
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-pink-500/15 border border-pink-400/30 text-[11px] font-bold text-pink-300 mb-3 shadow-sm backdrop-blur-md">
-          <Sparkles className="w-3.5 h-3.5 text-pink-400 animate-spin-slow" />
-          <span>Halo Teman-Teman! 🌸 (˶ᵔ ᵕ ᵔ˶)</span>
+          <Sparkles className="w-3.5 h-3.5 text-pink-400" />
+          <span>Selamat Datang</span>
         </div>
 
-        {/* Cute Headline */}
+        {/* Headline */}
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-200 via-rose-300 to-purple-200 leading-snug">
-          Selamat Datang di Duniaku ✨
+          Galeri & Portofolio
         </h1>
 
         <p className="mt-2 text-xs sm:text-sm text-pink-200/80 font-medium tracking-wide">
-          Ruang cerita, kenangan, & musik santai bareng Ahmad 🐾
+          Koleksi foto momen, kenangan, dan musik favorit
         </p>
 
-        {/* Marshmallow Candy Loading Bar with cute star */}
+        {/* Marshmallow Candy Loading Bar */}
         <div className="mt-6 w-48 mx-auto h-2 bg-pink-950/60 border border-pink-500/30 rounded-full p-0.5 overflow-hidden relative shadow-inner">
           <div
             className="h-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-400 rounded-full transition-all duration-[2200ms] ease-out"
@@ -130,7 +119,7 @@ export default function SplashScreen({ onFinish }) {
 
         {/* Skip hint */}
         <span className="block mt-4 text-[10px] text-pink-300/50 hover:text-pink-300 transition-colors">
-          Sentuh layar untuk langsung masuk 👆
+          Klik di mana saja untuk lanjut
         </span>
       </div>
     </div>

@@ -24,12 +24,9 @@ export default function PhotoCard({
     <TiltCard
       maxTilt={5}
       glare={true}
-      className="group relative pt-2"
+      className="group relative"
       onClick={() => onOpenLightbox(photo)}
     >
-      {/* Cute Washi Tape / Stiker Selotip Pastel di atas kartu */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-14 sm:w-16 h-3.5 bg-pink-300/80 dark:bg-pink-400/60 backdrop-blur-sm -rotate-2 rounded-sm shadow-sm border-t border-b border-pink-400/40 z-30 pointer-events-none group-hover:rotate-0 transition-transform" />
-
       <div className="relative cursor-pointer overflow-hidden rounded-3xl bg-white dark:bg-zinc-900 border border-pink-200/60 dark:border-zinc-800/80 shadow-sm hover:shadow-2xl hover:border-pink-400/60 transition-all duration-300">
         {/* Aspect ratio container */}
         <div
@@ -46,7 +43,7 @@ export default function PhotoCard({
           {/* Skeleton loader with cute shimmer */}
           {!imageLoaded && (
             <div className="w-full h-full bg-pink-50 dark:bg-zinc-800/80 animate-pulse flex items-center justify-center">
-              <Camera className="w-6 h-6 text-pink-300 opacity-60 animate-bounce" />
+              <Camera className="w-6 h-6 text-pink-300 opacity-60" />
             </div>
           )}
 
@@ -63,8 +60,8 @@ export default function PhotoCard({
 
         {/* Top bar: Category + Edit/Delete buttons (admin only) + Expand */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-          <span className="text-[10px] font-bold tracking-wider px-2.5 py-1 rounded-full bg-pink-500/85 backdrop-blur-md text-white shadow-sm border border-white/20">
-            🌸 {photo.category}
+          <span className="text-[10px] font-bold tracking-wider px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white shadow-sm border border-white/20">
+            {photo.category}
           </span>
 
           <div className="flex items-center gap-1.5">
@@ -134,7 +131,7 @@ export default function PhotoCard({
                 <Camera className="w-3 h-3 text-pink-300" />
                 <span>{photo.camera}</span>
               </span>
-              <span className="text-pink-300">{(photo.likes || 0) + (isLiked ? 1 : 0)} cinta 💖</span>
+              <span className="text-pink-300">{(photo.likes || 0) + (isLiked ? 1 : 0)} suka</span>
             </div>
           )}
         </div>
@@ -143,7 +140,7 @@ export default function PhotoCard({
         <div className="sm:hidden px-3.5 py-2.5 flex items-center justify-between bg-white dark:bg-zinc-900 border-t border-pink-100 dark:border-zinc-800/60">
           <div className="truncate mr-2">
             <div className="text-xs font-bold text-zinc-800 dark:text-zinc-200 truncate">{photo.title}</div>
-            <div className="text-[10px] font-semibold text-pink-500">🌸 {photo.category}</div>
+            <div className="text-[10px] font-semibold text-pink-500">{photo.category}</div>
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             {isAdmin && onEdit && (

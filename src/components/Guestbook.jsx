@@ -23,10 +23,10 @@ export default function Guestbook({
     setSubmitting(true);
     try {
       await onSendMessage({
-        name: isAnonymous ? 'Teman Rahasia (Anonim) 🐾' : name.trim() || 'Teman Baik 🌸',
+        name: isAnonymous ? 'Anonim' : name.trim() || 'Teman',
         relationship: 'Teman',
         message: message.trim(),
-        avatarEmoji: '✨',
+        avatarEmoji: '💬',
       });
       setMessage('');
       if (!isAnonymous) setName('');
@@ -45,7 +45,7 @@ export default function Guestbook({
   };
 
   const formatDate = (dateObj) => {
-    if (!dateObj) return 'Baru saja ✨';
+    if (!dateObj) return 'Baru saja';
     try {
       const d = dateObj.toDate ? dateObj.toDate() : new Date(dateObj);
       return d.toLocaleDateString('id-ID', {
@@ -56,7 +56,7 @@ export default function Guestbook({
         minute: '2-digit',
       });
     } catch {
-      return 'Baru saja ✨';
+      return 'Baru saja';
     }
   };
 
@@ -65,29 +65,25 @@ export default function Guestbook({
       {/* Intro Header */}
       <div className="text-center space-y-2">
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-pink-100 dark:bg-pink-950/40 border border-pink-200 dark:border-pink-800 text-pink-600 dark:text-pink-300 text-xs font-bold shadow-sm">
-          <span>💌</span>
-          <span>Kotak Surat Manis & Salam 🌸</span>
+          <span>💬</span>
+          <span>Buku Tamu</span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
-          Tinggalkan Pesan & Cerita Manis (˶ᵔ ᵕ ᵔ˶)♡
+          Tinggalkan Pesan & Sapaan
         </h2>
         <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto leading-relaxed">
-          Tulis kenangan seru bareng Ahmad, salam sapa, atau pesan rahasia di sini yaa. Pesan kamu akan langsung tampil di bawah! ✨🐾
+          Tulis pesan, kesan, atau sapaan untuk Ahmad di sini. Pesan kamu akan langsung tampil di bawah.
         </p>
       </div>
 
-      {/* Input Message Card Form (Scrapbook Notepad style) */}
+      {/* Input Message Card Form */}
       <div className="relative bg-white dark:bg-zinc-900 rounded-3xl p-5 sm:p-7 shadow-xl border border-pink-200/80 dark:border-zinc-800">
-        {/* Cute tape decoration on form */}
-        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-20 h-4 bg-pink-300/80 dark:bg-pink-400/50 backdrop-blur-sm -rotate-1 rounded-sm shadow-xs border-t border-pink-400/40 pointer-events-none" />
-
         <form onSubmit={handleSubmit} className="space-y-4 pt-1">
           {/* Name Input */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
-                <span>Nama Kamu:</span>
-                <span className="text-pink-500">🌸</span>
+                <span>Nama:</span>
               </label>
               <label className="flex items-center gap-1.5 text-[11px] font-medium text-pink-600 dark:text-pink-400 cursor-pointer select-none">
                 <input
@@ -96,24 +92,23 @@ export default function Guestbook({
                   onChange={(e) => setIsAnonymous(e.target.checked)}
                   className="rounded text-pink-500 focus:ring-pink-500 h-3.5 w-3.5 accent-pink-500"
                 />
-                <span>Kirim Anonim / Rahasia 🤫</span>
+                <span>Kirim sebagai Anonim</span>
               </label>
             </div>
             <input
               type="text"
               disabled={isAnonymous || submitting}
-              value={isAnonymous ? 'Teman Rahasia (Anonim) 🐾' : name}
+              value={isAnonymous ? 'Anonim' : name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Tulis nama panggilan kamu yang gemas... (contoh: Siti / Budi 🍓)"
+              placeholder="Nama kamu..."
               className="w-full px-4 py-2.5 text-xs rounded-2xl border border-pink-200 dark:border-zinc-700 bg-pink-50/40 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-pink-400/50 disabled:opacity-60 transition-all shadow-inner"
             />
           </div>
 
           {/* Message Textarea */}
           <div>
-            <label className="block text-xs font-bold text-zinc-700 dark:text-zinc-300 mb-1.5 flex items-center gap-1.5">
-              <span>Pesan / Cerita Kenangan:</span>
-              <span className="text-pink-500">✨</span>
+            <label className="block text-xs font-bold text-zinc-700 dark:text-zinc-300 mb-1.5">
+              <span>Pesan:</span>
             </label>
             <textarea
               required
@@ -121,7 +116,7 @@ export default function Guestbook({
               rows={3}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Tulis pesan manis, kesan, atau cerita seru bareng Ahmad di sini yaa... 🐾💖"
+              placeholder="Tulis pesan atau sapaan kamu..."
               className="w-full px-4 py-2.5 text-xs rounded-2xl border border-pink-200 dark:border-zinc-700 bg-pink-50/40 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-pink-400/50 resize-none transition-all shadow-inner"
             />
           </div>
@@ -133,7 +128,7 @@ export default function Guestbook({
               className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 disabled:opacity-50 text-white text-xs font-bold rounded-full shadow-lg shadow-pink-500/25 transition-all transform hover:scale-105 active:scale-95"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>{submitting ? 'Mengirim pesan manis...' : '🌸 Kirim Pesan Manis ✈️'}</span>
+              <span>{submitting ? 'Mengirim...' : 'Kirim Pesan'}</span>
             </button>
           </div>
         </form>
@@ -145,7 +140,7 @@ export default function Guestbook({
           <h3 className="text-sm font-bold text-zinc-800 dark:text-zinc-200 flex items-center gap-2">
             <span>Daftar Pesan Masuk</span>
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-zinc-800 text-pink-600 dark:text-pink-300 font-bold">
-              {messages.length} Surat 💌
+              {messages.length} Pesan
             </span>
           </h3>
         </div>
@@ -161,36 +156,33 @@ export default function Guestbook({
           </div>
         ) : messages.length === 0 ? (
           <div className="py-12 text-center bg-white/70 dark:bg-zinc-900/60 rounded-3xl border border-dashed border-pink-200 dark:border-zinc-800 p-6">
-            <span className="text-4xl block mb-2 animate-bounce-soft">💌</span>
+            <span className="text-3xl block mb-2 text-zinc-400">💬</span>
             <p className="text-xs font-bold text-zinc-700 dark:text-zinc-300">
-              Belum ada pesan yang masuk nih.
+              Belum ada pesan masuk.
             </p>
-            <p className="text-[11px] text-pink-500 mt-1">
-              Yuk jadi orang pertama yang nulis pesan manis di atas! 👆🌸
+            <p className="text-[11px] text-zinc-500 mt-1">
+              Jadilah yang pertama menulis pesan di atas.
             </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {messages.map((item, idx) => (
+            {messages.map((item) => (
               <div
                 key={item.id}
                 className="group relative bg-white dark:bg-zinc-900/90 rounded-3xl p-5 shadow-sm hover:shadow-xl hover:border-pink-400/50 border border-pink-200/70 dark:border-zinc-800/80 transition-all duration-300 space-y-3"
               >
-                {/* Cute mini tape sticker on top of sticky note */}
-                <div className={`absolute -top-1.5 ${idx % 2 === 0 ? 'left-6 -rotate-2' : 'right-6 rotate-2'} w-10 h-3 bg-pink-300/80 dark:bg-pink-400/50 rounded-sm shadow-xs border-t border-pink-400/30 pointer-events-none`} />
-
                 {/* Header: Avatar, Name, Relationship, Date */}
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2.5">
                     <span className="w-8 h-8 rounded-2xl bg-pink-100 dark:bg-zinc-800 flex items-center justify-center text-base shadow-inner">
-                      {item.avatarEmoji || '🌸'}
+                      {item.avatarEmoji || '💬'}
                     </span>
                     <div>
                       <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 leading-tight">
                         {item.name}
                       </h4>
                       <span className="inline-block text-[10px] text-pink-500 font-semibold">
-                        🐾 {item.relationship || 'Teman Baik'}
+                        {item.relationship || 'Teman'}
                       </span>
                     </div>
                   </div>
@@ -208,11 +200,11 @@ export default function Guestbook({
                 </div>
 
                 {/* Message Content */}
-                <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed whitespace-pre-wrap bg-pink-50/40 dark:bg-zinc-800/40 p-3 rounded-2xl border border-pink-100/60 dark:border-zinc-800/60 italic">
-                  "{item.message}"
+                <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed whitespace-pre-wrap bg-pink-50/40 dark:bg-zinc-800/40 p-3 rounded-2xl border border-pink-100/60 dark:border-zinc-800/60">
+                  {item.message}
                 </p>
 
-                {/* Footer: Date & Like Counter with Explosion */}
+                {/* Footer: Date & Like Counter */}
                 <div className="pt-2 border-t border-pink-100 dark:border-zinc-800/60 flex items-center justify-between text-[10px] text-zinc-400">
                   <span>{formatDate(item.createdAt)}</span>
 
@@ -221,7 +213,7 @@ export default function Guestbook({
                     isLiked={!!likedPosts[item.id]}
                     count={item.likes || 0}
                     onToggle={() => handleLike(item.id)}
-                    title="Beri cinta untuk pesan ini"
+                    title="Sukai pesan ini"
                   />
                 </div>
               </div>

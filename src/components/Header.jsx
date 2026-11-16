@@ -75,8 +75,8 @@ export default function Header({
       {/* Top Bar */}
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-1.5 text-xs tracking-wider uppercase font-bold text-pink-600 dark:text-pink-300 bg-pink-100/80 dark:bg-pink-950/40 px-3.5 py-1.5 rounded-full border border-pink-200 dark:border-pink-800/60 shadow-sm backdrop-blur">
-          <span className="text-sm">🌸</span>
-          <span>Ruang Cerita Ahmad 🐾</span>
+          <Sparkles className="w-3.5 h-3.5 text-pink-500" />
+          <span>Galeri Pribadi</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -133,23 +133,15 @@ export default function Header({
         </div>
       </div>
 
-      {/* Avatar with Cute Ears & Clickable Edit if Admin */}
+      {/* Avatar with Ring & Clickable Edit if Admin */}
       <div 
         onClick={currentUser ? onEditProfile : undefined}
         className={`relative inline-block mb-4 group ${currentUser ? 'cursor-pointer' : ''}`}
         title={currentUser ? "Klik untuk mengedit foto profil & data diri" : undefined}
       >
-        {/* Adorable Cat Ears & Sparkle Sticker on Avatar */}
-        <div className="absolute -top-3.5 left-2.5 text-2xl animate-wiggle select-none pointer-events-none z-20">
-          🐾
-        </div>
-        <div className="absolute -top-3 right-2.5 text-xl animate-bounce-soft select-none pointer-events-none z-20">
-          🌸
-        </div>
-
         <div className="relative">
           {/* Animated Glowing Ring Aura */}
-          <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-pink-400 via-rose-400 to-purple-400 opacity-70 blur-md animate-pulse-glow group-hover:opacity-100 transition-opacity" />
+          <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-pink-400 via-rose-400 to-purple-400 opacity-60 blur-md group-hover:opacity-100 transition-opacity" />
 
           <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-pink-400 via-rose-400 to-purple-400 shadow-xl shadow-pink-500/20">
             <img
@@ -203,8 +195,8 @@ export default function Header({
           </span>
         )}
         {profile.status && (
-          <span className="flex items-center gap-1.5 bg-pink-50 dark:bg-zinc-900/80 px-3 py-1 rounded-full border border-pink-200/50 dark:border-zinc-800 text-[11px] font-semibold text-pink-600 dark:text-pink-300">
-            <span className="text-xs animate-wiggle">🍓</span>
+          <span className="flex items-center gap-1.5 bg-pink-50 dark:bg-zinc-900/80 px-3 py-1 rounded-full border border-pink-200/50 dark:border-zinc-800 text-[11px] font-semibold text-zinc-700 dark:text-zinc-300">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             {profile.status}
           </span>
         )}
@@ -218,7 +210,7 @@ export default function Header({
             className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-pink-100 hover:bg-pink-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-pink-700 dark:text-pink-300 border border-pink-300/60 dark:border-zinc-700 transition-all shadow-sm"
           >
             <Pencil className="w-3.5 h-3.5 text-pink-500" />
-            <span>Edit Profil Saya</span>
+            <span>Edit Profil</span>
           </button>
         </div>
       )}
@@ -243,19 +235,19 @@ export default function Header({
         ))}
       </div>
 
-      {/* Cute Stats pill counter */}
-      <div className="mt-7 pt-5 border-t border-pink-200/60 dark:border-zinc-800/70 grid grid-cols-3 max-w-xs mx-auto text-center divide-x divide-pink-200 dark:divide-zinc-800 bg-pink-50/50 dark:bg-zinc-900/50 rounded-2xl py-3 border border-pink-100 dark:border-zinc-800/50 shadow-sm">
+      {/* Clean Stats pill counter */}
+      <div className="mt-7 pt-5 border-t border-pink-200/60 dark:border-zinc-800/70 grid grid-cols-3 max-w-xs mx-auto text-center divide-x divide-pink-200 dark:divide-zinc-800 bg-white/70 dark:bg-zinc-900/70 rounded-2xl py-3 border border-pink-100 dark:border-zinc-800/50 shadow-sm backdrop-blur">
         <div>
           <div className="text-base font-extrabold text-pink-600 dark:text-pink-400">{totalPhotos}</div>
-          <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">📸 Foto Momen</div>
+          <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Foto</div>
         </div>
         <div>
           <div className="text-base font-extrabold text-rose-500 dark:text-rose-400">{totalLikes}</div>
-          <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">💖 Cinta</div>
+          <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Suka</div>
         </div>
         <div>
-          <div className="text-base font-extrabold text-purple-600 dark:text-purple-400">100%</div>
-          <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">✨ Bahagia</div>
+          <div className="text-base font-extrabold text-purple-600 dark:text-purple-400">Album</div>
+          <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Kenangan</div>
         </div>
       </div>
     </header>

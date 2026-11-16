@@ -16,12 +16,12 @@ export default function CategoryFilter({
 
   const getCategoryEmoji = (cat) => {
     switch (cat) {
-      case 'Semua': return '🌸';
+      case 'Semua': return '✨';
       case 'SMP': return '🎒';
       case 'SMK': return '🎓';
       case 'Family': return '🏡';
       case 'Rumah': return '🏠';
-      case 'Momen': return '✨';
+      case 'Momen': return '📷';
       case 'Kampus': return '🏛️';
       default: return '📷';
     }
@@ -31,12 +31,12 @@ export default function CategoryFilter({
     <div className="max-w-5xl mx-auto px-4 mb-6 space-y-3.5">
       {/* Search Bar & Layout Switcher */}
       <div className="flex flex-col sm:flex-row gap-3 items-center justify-between">
-        {/* Search Input with cute icon */}
+        {/* Search Input with clean icon */}
         <div className="relative w-full sm:w-80">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-pink-400" />
           <input
             type="text"
-            placeholder="Cari foto kenangan manis... 🔍🌸"
+            placeholder="Cari foto, lokasi, kamera..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-9 pr-4 py-2 text-xs rounded-full bg-white/80 dark:bg-zinc-900/80 border border-pink-200/70 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-pink-400/50 transition-all shadow-sm backdrop-blur"

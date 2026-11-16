@@ -21,18 +21,14 @@ export default function FavoriteMusic() {
         <div className="absolute -top-12 -right-12 w-52 h-52 bg-pink-500/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-12 -left-12 w-52 h-52 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Cute floating micro stickers */}
-        <span className="absolute top-4 right-28 text-lg animate-wiggle pointer-events-none">🎵</span>
-        <span className="absolute bottom-4 left-1/3 text-base animate-bounce-soft pointer-events-none">🌸</span>
-
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-pink-500/15 border border-pink-400/30 text-pink-300 text-xs font-bold shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-pink-400 animate-spin-slow" />
-              <span>Mixtape & Lagu Kesayangan 🎧🌸</span>
+              <Headphones className="w-3.5 h-3.5 text-pink-400" />
+              <span>Playlist & Band Favorit</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-pink-100 via-rose-200 to-purple-200 bg-clip-text text-transparent">
-              {musicProfile.headline} (˶ᵔ ᵕ ᵔ˶)♡
+              {musicProfile.headline}
             </h2>
             <p className="text-xs sm:text-sm text-pink-200/80 max-w-xl leading-relaxed">
               {musicProfile.bio}
@@ -50,14 +46,14 @@ export default function FavoriteMusic() {
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.503 17.308c-.216.353-.674.464-1.026.248-2.812-1.718-6.352-2.106-10.521-1.153-.404.092-.81-.16-.902-.564-.092-.403.16-.81.564-.902 4.568-1.044 8.487-.604 11.637 1.323.352.216.464.674.248 1.048zm1.47-3.268c-.272.443-.854.582-1.297.31-3.218-1.978-8.125-2.55-11.93-1.394-.497.15-1.027-.133-1.178-.63-.15-.498.133-1.028.63-1.179 4.354-1.321 9.775-.68 13.465 1.587.443.272.582.854.31 1.306zm.126-3.41c-3.858-2.29-10.228-2.502-13.918-1.381-.59.18-1.218-.16-1.398-.75-.18-.59.16-1.219.75-1.399 4.245-1.289 11.278-1.043 15.726 1.597.532.316.707 1.008.39 1.54-.316.533-1.008.708-1.55.393z" />
               </svg>
-              <span>Buka di Spotify 🎵</span>
+              <span>Spotify</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
       </div>
 
-      {/* Filter Tabs with Candy Pill Styling */}
+      {/* Filter Tabs */}
       <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
         <button
           onClick={() => setFilter('all')}
@@ -67,7 +63,7 @@ export default function FavoriteMusic() {
               : 'bg-white/80 dark:bg-zinc-900/80 text-zinc-600 dark:text-zinc-400 hover:bg-pink-50 dark:hover:bg-zinc-800 border border-pink-200/60 dark:border-zinc-800'
           }`}
         >
-          🌸 Semua ({favoriteBands.length + favoriteTracks.length})
+          Semua ({favoriteBands.length + favoriteTracks.length})
         </button>
         <button
           onClick={() => setFilter('bands')}

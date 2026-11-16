@@ -225,7 +225,7 @@ export default function App() {
         {/* TAB SWITCHER: Galeri Foto VS Buku Tamu VS Musik Favorit */}
         {/* ========================================================================= */}
         <div className="flex justify-center mb-6 px-4">
-          <div className="inline-flex p-1.5 bg-pink-100/80 dark:bg-zinc-900/90 border border-pink-200/80 dark:border-zinc-800 rounded-full shadow-sm backdrop-blur flex-wrap justify-center gap-1.5">
+          <div className="inline-flex p-1.5 bg-pink-100/70 dark:bg-zinc-900/90 border border-pink-200/80 dark:border-zinc-800 rounded-full shadow-sm backdrop-blur flex-wrap justify-center gap-1.5">
             <button
               onClick={() => setActiveTab('gallery')}
               className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95 ${
@@ -234,7 +234,7 @@ export default function App() {
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-300'
               }`}
             >
-              <span>📸 Galeri Momen</span>
+              <span>📸 Galeri</span>
               <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                 activeTab === 'gallery'
                   ? 'bg-white/20 text-white'
@@ -252,8 +252,8 @@ export default function App() {
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-300'
               }`}
             >
-              <span>💌 Buku Tamu Gemas</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-pink-500 text-white animate-bounce">
+              <span>💬 Buku Tamu</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-pink-500 text-white">
                 {guestMessages.length}
               </span>
             </button>
@@ -266,10 +266,7 @@ export default function App() {
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-300'
               }`}
             >
-              <span>🎵 Musik & Band</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-emerald-500 text-white">
-                Chill
-              </span>
+              <span>🎵 Musik Favorit</span>
             </button>
           </div>
         </div>
@@ -287,7 +284,7 @@ export default function App() {
                   className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white text-xs font-bold rounded-full shadow-lg shadow-pink-500/25 transition-all duration-200 transform hover:scale-105 active:scale-95"
                 >
                   <Upload className="w-4 h-4" />
-                  <span>🌸 + Upload Foto Baru (Admin)</span>
+                  <span>+ Upload Foto Baru</span>
                 </button>
               </div>
             )}
