@@ -199,12 +199,12 @@ export default function App() {
   const selectedPhoto = selectedPhotoIndex !== null ? filteredPhotos[selectedPhotoIndex] : null;
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
-      {/* Background animated aurora ambient glow */}
+    <div className="min-h-screen bg-[#faf7f9] dark:bg-[#0f0d15] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
+      {/* Background animated cute pastel aurora glow */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
-        <div className="absolute -top-32 -left-20 w-[500px] h-[500px] bg-gradient-to-tr from-rose-500/15 via-pink-500/10 to-transparent blur-[120px] rounded-full animate-aurora-1" />
-        <div className="absolute top-1/4 -right-24 w-[550px] h-[550px] bg-gradient-to-bl from-purple-500/15 via-indigo-500/10 to-transparent blur-[130px] rounded-full animate-aurora-2" />
-        <div className="absolute -bottom-32 left-1/3 w-[600px] h-[400px] bg-gradient-to-t from-rose-500/10 via-amber-500/10 to-transparent blur-[140px] rounded-full animate-pulse-glow" />
+        <div className="absolute -top-32 -left-20 w-[550px] h-[550px] bg-gradient-to-tr from-pink-400/20 via-rose-300/15 to-transparent blur-[140px] rounded-full animate-aurora-1" />
+        <div className="absolute top-1/4 -right-24 w-[600px] h-[600px] bg-gradient-to-bl from-purple-400/20 via-indigo-300/15 to-transparent blur-[150px] rounded-full animate-aurora-2" />
+        <div className="absolute -bottom-32 left-1/3 w-[650px] h-[450px] bg-gradient-to-t from-pink-300/15 via-amber-200/10 to-transparent blur-[150px] rounded-full animate-pulse-glow" />
       </div>
 
       <div className="relative z-10">
@@ -225,21 +225,20 @@ export default function App() {
         {/* TAB SWITCHER: Galeri Foto VS Buku Tamu VS Musik Favorit */}
         {/* ========================================================================= */}
         <div className="flex justify-center mb-6 px-4">
-          <div className="inline-flex p-1 bg-zinc-200/70 dark:bg-zinc-900/90 border border-zinc-300/60 dark:border-zinc-800 rounded-full shadow-inner backdrop-blur flex-wrap justify-center gap-1">
+          <div className="inline-flex p-1.5 bg-pink-100/80 dark:bg-zinc-900/90 border border-pink-200/80 dark:border-zinc-800 rounded-full shadow-sm backdrop-blur flex-wrap justify-center gap-1.5">
             <button
               onClick={() => setActiveTab('gallery')}
-              className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all ${
+              className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95 ${
                 activeTab === 'gallery'
-                  ? 'bg-white dark:bg-zinc-800 text-rose-500 shadow-md scale-100'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+                  ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 text-white shadow-md shadow-pink-500/25 scale-100'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-300'
               }`}
             >
-              <Camera className="w-3.5 h-3.5" />
-              <span>Galeri Foto</span>
+              <span>📸 Galeri Momen</span>
               <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                 activeTab === 'gallery'
-                  ? 'bg-rose-500/10 text-rose-500'
-                  : 'bg-zinc-300/60 dark:bg-zinc-800 text-zinc-500'
+                  ? 'bg-white/20 text-white'
+                  : 'bg-pink-200/70 dark:bg-zinc-800 text-pink-700 dark:text-pink-300'
               }`}>
                 {photos.length}
               </span>
@@ -247,31 +246,29 @@ export default function App() {
 
             <button
               onClick={() => setActiveTab('guestbook')}
-              className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all ${
+              className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95 ${
                 activeTab === 'guestbook'
-                  ? 'bg-white dark:bg-zinc-800 text-rose-500 shadow-md scale-100'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+                  ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 text-white shadow-md shadow-pink-500/25 scale-100'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-300'
               }`}
             >
-              <MessageCircle className="w-3.5 h-3.5" />
-              <span>Buku Tamu</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-rose-500 text-white animate-pulse">
+              <span>💌 Buku Tamu Gemas</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-pink-500 text-white animate-bounce">
                 {guestMessages.length}
               </span>
             </button>
 
             <button
               onClick={() => setActiveTab('music')}
-              className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all ${
+              className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95 ${
                 activeTab === 'music'
-                  ? 'bg-white dark:bg-zinc-800 text-rose-500 shadow-md scale-100'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+                  ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 text-white shadow-md shadow-pink-500/25 scale-100'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-300'
               }`}
             >
-              <Music className="w-3.5 h-3.5" />
-              <span>Musik & Band</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-gradient-to-r from-emerald-500 to-teal-500 text-white">
-                Spotify
+              <span>🎵 Musik & Band</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-emerald-500 text-white">
+                Chill
               </span>
             </button>
           </div>
@@ -287,10 +284,10 @@ export default function App() {
               <div className="flex justify-center mb-5">
                 <button
                   onClick={() => setShowUploadModal(true)}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white text-sm font-semibold rounded-full shadow-lg shadow-rose-500/25 transition-all duration-200 transform active:scale-95"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white text-xs font-bold rounded-full shadow-lg shadow-pink-500/25 transition-all duration-200 transform hover:scale-105 active:scale-95"
                 >
                   <Upload className="w-4 h-4" />
-                  Upload Foto Baru (Admin)
+                  <span>🌸 + Upload Foto Baru (Admin)</span>
                 </button>
               </div>
             )}
