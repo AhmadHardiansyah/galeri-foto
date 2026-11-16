@@ -8,6 +8,7 @@ import {
   Radio,
   Sparkles,
 } from 'lucide-react';
+import TiltCard from './TiltCard';
 import { musicProfile, favoriteBands, favoriteTracks } from '../data/favoriteMusic';
 
 export default function FavoriteMusic() {
@@ -116,71 +117,72 @@ export default function FavoriteMusic() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {favoriteBands.map((band) => (
-              <div
-                key={band.id}
-                className="group relative rounded-2xl bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 p-5 shadow-sm hover:shadow-xl hover:border-rose-500/40 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  {/* Photo & Badge */}
-                  <div className="flex items-center gap-3.5 mb-3">
-                    <img
-                      src={band.image}
-                      alt={band.name}
-                      className="w-14 h-14 rounded-full object-cover ring-2 ring-rose-500/30 group-hover:scale-105 transition-transform"
-                      loading="lazy"
-                    />
-                    <div className="min-w-0">
-                      <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 truncate group-hover:text-rose-500 transition-colors">
-                        {band.name}
-                      </h4>
-                      <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
-                        {band.origin}
-                      </p>
-                      <span className="inline-block mt-1 text-[9px] px-2 py-0.5 rounded-full font-medium bg-rose-500/10 text-rose-500 dark:text-rose-400">
-                        {band.genre}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Personal Quote */}
-                  {band.quote && (
-                    <p className="text-xs text-zinc-600 dark:text-zinc-300 italic bg-zinc-50 dark:bg-zinc-800/50 p-2.5 rounded-xl border border-zinc-200/60 dark:border-zinc-800 mb-3">
-                      "{band.quote}"
-                    </p>
-                  )}
-
-                  {/* Top Songs */}
-                  <div className="space-y-1 mb-4">
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">
-                      Lagu Pilihan:
-                    </span>
-                    <div className="flex flex-wrap gap-1.5 mt-1">
-                      {band.topSongs.map((song, i) => (
-                        <span
-                          key={i}
-                          className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium"
-                        >
-                          🎵 {song}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Spotify Link */}
-                <a
-                  href={band.spotifyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-[#1DB954] hover:text-black dark:hover:bg-[#1DB954] dark:hover:text-black text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition-colors"
+              <TiltCard key={band.id} maxTilt={6} glare={true} className="group">
+                <div
+                  className="h-full rounded-2xl bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 p-5 shadow-sm hover:shadow-2xl hover:border-rose-500/40 transition-all duration-300 flex flex-col justify-between"
                 >
-                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.503 17.308c-.216.353-.674.464-1.026.248-2.812-1.718-6.352-2.106-10.521-1.153-.404.092-.81-.16-.902-.564-.092-.403.16-.81.564-.902 4.568-1.044 8.487-.604 11.637 1.323.352.216.464.674.248 1.048zm1.47-3.268c-.272.443-.854.582-1.297.31-3.218-1.978-8.125-2.55-11.93-1.394-.497.15-1.027-.133-1.178-.63-.15-.498.133-1.028.63-1.179 4.354-1.321 9.775-.68 13.465 1.587.443.272.582.854.31 1.306zm.126-3.41c-3.858-2.29-10.228-2.502-13.918-1.381-.59.18-1.218-.16-1.398-.75-.18-.59.16-1.219.75-1.399 4.245-1.289 11.278-1.043 15.726 1.597.532.316.707 1.008.39 1.54-.316.533-1.008.708-1.55.393z" />
-                  </svg>
-                  <span>Dengarkan di Spotify</span>
-                  <ExternalLink className="w-3 h-3 ml-0.5" />
-                </a>
-              </div>
+                  <div>
+                    {/* Photo & Badge */}
+                    <div className="flex items-center gap-3.5 mb-3">
+                      <img
+                        src={band.image}
+                        alt={band.name}
+                        className="w-14 h-14 rounded-full object-cover ring-2 ring-rose-500/30 group-hover:scale-105 transition-transform"
+                        loading="lazy"
+                      />
+                      <div className="min-w-0">
+                        <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 truncate group-hover:text-rose-500 transition-colors">
+                          {band.name}
+                        </h4>
+                        <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
+                          {band.origin}
+                        </p>
+                        <span className="inline-block mt-1 text-[9px] px-2 py-0.5 rounded-full font-medium bg-rose-500/10 text-rose-500 dark:text-rose-400">
+                          {band.genre}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Personal Quote */}
+                    {band.quote && (
+                      <p className="text-xs text-zinc-600 dark:text-zinc-300 italic bg-zinc-50 dark:bg-zinc-800/50 p-2.5 rounded-xl border border-zinc-200/60 dark:border-zinc-800 mb-3">
+                        "{band.quote}"
+                      </p>
+                    )}
+
+                    {/* Top Songs */}
+                    <div className="space-y-1 mb-4">
+                      <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">
+                        Lagu Pilihan:
+                      </span>
+                      <div className="flex flex-wrap gap-1.5 mt-1">
+                        {band.topSongs.map((song, i) => (
+                          <span
+                            key={i}
+                            className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium"
+                          >
+                            🎵 {song}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Spotify Link */}
+                  <a
+                    href={band.spotifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-[#1DB954] hover:text-black dark:hover:bg-[#1DB954] dark:hover:text-black text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition-colors"
+                  >
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.503 17.308c-.216.353-.674.464-1.026.248-2.812-1.718-6.352-2.106-10.521-1.153-.404.092-.81-.16-.902-.564-.092-.403.16-.81.564-.902 4.568-1.044 8.487-.604 11.637 1.323.352.216.464.674.248 1.048zm1.47-3.268c-.272.443-.854.582-1.297.31-3.218-1.978-8.125-2.55-11.93-1.394-.497.15-1.027-.133-1.178-.63-.15-.498.133-1.028.63-1.179 4.354-1.321 9.775-.68 13.465 1.587.443.272.582.854.31 1.306zm.126-3.41c-3.858-2.29-10.228-2.502-13.918-1.381-.59.18-1.218-.16-1.398-.75-.18-.59.16-1.219.75-1.399 4.245-1.289 11.278-1.043 15.726 1.597.532.316.707 1.008.39 1.54-.316.533-1.008.708-1.55.393z" />
+                    </svg>
+                    <span>Dengarkan di Spotify</span>
+                    <ExternalLink className="w-3 h-3 ml-0.5" />
+                  </a>
+                </div>
+              </TiltCard>
             ))}
           </div>
         </section>

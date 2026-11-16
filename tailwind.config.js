@@ -13,6 +13,11 @@ export default {
       animation: {
         'fade-in': 'fadeIn 0.3s ease-out forwards',
         'scale-in': 'scaleIn 0.25s ease-out forwards',
+        'spin-slow': 'spin 12s linear infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'aurora-1': 'aurora1 14s ease-in-out infinite alternate',
+        'aurora-2': 'aurora2 18s ease-in-out infinite alternate',
+        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -23,9 +28,26 @@ export default {
           '0%': { opacity: '0', transform: 'scale(0.95)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        aurora1: {
+          '0%': { transform: 'translate(0px, 0px) scale(1)' },
+          '50%': { transform: 'translate(60px, 40px) scale(1.15)' },
+          '100%': { transform: 'translate(-40px, -20px) scale(0.95)' },
+        },
+        aurora2: {
+          '0%': { transform: 'translate(0px, 0px) scale(1)' },
+          '50%': { transform: 'translate(-50px, -30px) scale(1.1)' },
+          '100%': { transform: 'translate(30px, 50px) scale(1.05)' },
+        },
+        pulseGlow: {
+          '0%, 100%': { opacity: '0.4' },
+          '50%': { opacity: '0.85' },
+        },
       },
     },
   },
   plugins: [],
 }
-

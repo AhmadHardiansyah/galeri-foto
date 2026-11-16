@@ -3,7 +3,6 @@ import {
   X, 
   ChevronLeft, 
   ChevronRight, 
-  Heart, 
   MapPin, 
   Calendar, 
   Camera, 
@@ -11,6 +10,7 @@ import {
   Share2, 
   Check 
 } from 'lucide-react';
+import LikeButton from './LikeButton';
 
 export default function LightboxModal({
   photo,
@@ -192,17 +192,16 @@ export default function LightboxModal({
 
           {/* Bottom Actions inside modal */}
           <div className="mt-6 pt-4 border-t border-zinc-800 flex items-center justify-between">
-            <button
-              onClick={() => onToggleLike(photo.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 transform active:scale-95 ${
+            <LikeButton
+              isLiked={isLiked}
+              count={(photo.likes || 0) + (isLiked ? 1 : 0)}
+              onToggle={() => onToggleLike(photo.id)}
+              className={
                 isLiked
                   ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30'
                   : 'bg-zinc-800 hover:bg-zinc-700 text-zinc-200'
-              }`}
-            >
-              <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
-              <span>{photo.likes + (isLiked ? 1 : 0)} Suka</span>
-            </button>
+              }
+            />
 
             {/* Mobile Prev / Next */}
             <div className="flex sm:hidden items-center gap-1">

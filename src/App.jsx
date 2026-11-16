@@ -198,9 +198,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
-      {/* Background ambient glow */}
+      {/* Background animated aurora ambient glow */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-tr from-rose-500/10 via-purple-500/10 to-amber-500/10 blur-[100px] rounded-full" />
+        <div className="absolute -top-32 -left-20 w-[500px] h-[500px] bg-gradient-to-tr from-rose-500/15 via-pink-500/10 to-transparent blur-[120px] rounded-full animate-aurora-1" />
+        <div className="absolute top-1/4 -right-24 w-[550px] h-[550px] bg-gradient-to-bl from-purple-500/15 via-indigo-500/10 to-transparent blur-[130px] rounded-full animate-aurora-2" />
+        <div className="absolute -bottom-32 left-1/3 w-[600px] h-[400px] bg-gradient-to-t from-rose-500/10 via-amber-500/10 to-transparent blur-[140px] rounded-full animate-pulse-glow" />
       </div>
 
       <div className="relative z-10">

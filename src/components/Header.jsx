@@ -138,12 +138,17 @@ export default function Header({
         className={`relative inline-block mb-4 group ${currentUser ? 'cursor-pointer' : ''}`}
         title={currentUser ? "Klik untuk mengedit foto profil & data diri" : undefined}
       >
-        <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 shadow-xl shadow-rose-500/20">
-          <img
-            src={profile.avatarUrl}
-            alt={profile.name}
-            className="w-full h-full object-cover rounded-full border-2 border-white dark:border-zinc-950 transition-transform duration-300 group-hover:scale-105"
-          />
+        <div className="relative">
+          {/* Animated Glowing Ring Aura */}
+          <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 opacity-70 blur-md animate-pulse-glow group-hover:opacity-100 transition-opacity" />
+
+          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 shadow-xl shadow-rose-500/20">
+            <img
+              src={profile.avatarUrl}
+              alt={profile.name}
+              className="w-full h-full object-cover rounded-full border-2 border-white dark:border-zinc-950 transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
         </div>
         
         {/* Badge Icon */}
