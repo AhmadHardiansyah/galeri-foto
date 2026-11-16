@@ -408,6 +408,7 @@ export default function App() {
             onToggleLike={handleToggleLike}
             isAdmin={!!currentUser}
             onEditPhoto={(p) => setEditingPhoto(p)}
+            onDeletePhoto={handleDelete}
           />
         )}
 

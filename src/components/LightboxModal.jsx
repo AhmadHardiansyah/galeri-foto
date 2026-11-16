@@ -9,7 +9,8 @@ import {
   Download, 
   Share2, 
   Check,
-  Pencil
+  Pencil,
+  Trash2
 } from 'lucide-react';
 import LikeButton from './LikeButton';
 import { getFilterClass } from '../utils/filterPresets';
@@ -23,6 +24,7 @@ export default function LightboxModal({
   onToggleLike,
   isAdmin = false,
   onEditPhoto,
+  onDeletePhoto,
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -67,6 +69,13 @@ export default function LightboxModal({
     }
   };
 
+  const handleDelete = () => {
+    if (window.confirm(`Hapus foto "${photo.title}"?\n\nFoto ini akan dihapus permanen dari galeri.`)) {
+      onDeletePhoto && onDeletePhoto(photo);
+      onClose();
+    }
+  };
+
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl animate-fade-in p-2 sm:p-6"
@@ -96,6 +105,18 @@ export default function LightboxModal({
             >
               <Pencil className="w-3.5 h-3.5" />
               <span>Edit Foto</span>
+            </button>
+          )}
+
+          {/* Delete Photo Button (Admin only) */}
+          {isAdmin && onDeletePhoto && (
+            <button
+              onClick={handleDelete}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600/90 hover:bg-red-600 text-white text-xs font-semibold backdrop-blur transition-all shadow-md active:scale-95"
+              title="Hapus foto ini"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Hapus</span>
             </button>
           )}
 
@@ -243,4 +264,3 @@ export default function LightboxModal({
     </div>
   );
 }
-
