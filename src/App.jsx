@@ -6,6 +6,7 @@ import LightboxModal from './components/LightboxModal';
 import UploadModal from './components/UploadModal';
 import LoginModal from './components/LoginModal';
 import EditProfileModal from './components/EditProfileModal';
+import EditPhotoModal from './components/EditPhotoModal';
 import SplashScreen from './components/SplashScreen';
 import Guestbook from './components/Guestbook';
 import FavoriteMusic from './components/FavoriteMusic';
@@ -42,6 +43,7 @@ export default function App() {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+  const [editingPhoto, setEditingPhoto] = useState(null);
   const [uploading, setUploading] = useState(false);
 
   // Authentication State (Admin)
@@ -347,6 +349,7 @@ export default function App() {
                         photo={photo}
                         onOpenLightbox={handleOpenLightbox}
                         onDelete={handleDelete}
+                        onEdit={(p) => setEditingPhoto(p)}
                         layoutMode={layoutMode}
                         isLiked={!!likedPhotos[photo.id]}
                         onToggleLike={handleToggleLike}
@@ -363,6 +366,7 @@ export default function App() {
                       photo={photo}
                       onOpenLightbox={handleOpenLightbox}
                       onDelete={handleDelete}
+                      onEdit={(p) => setEditingPhoto(p)}
                       layoutMode={layoutMode}
                       isLiked={!!likedPhotos[photo.id]}
                       onToggleLike={handleToggleLike}
@@ -405,6 +409,8 @@ export default function App() {
             onPrev={handlePrevPhoto}
             isLiked={!!likedPhotos[selectedPhoto.id]}
             onToggleLike={handleToggleLike}
+            isAdmin={!!currentUser}
+            onEditPhoto={(p) => setEditingPhoto(p)}
           />
         )}
 
@@ -432,6 +438,19 @@ export default function App() {
             profile={profile}
             onClose={() => setShowEditProfileModal(false)}
             onSave={updateProfile}
+          />
+        )}
+
+        {/* Edit Photo Modal (Hanya jika admin login) */}
+        {editingPhoto && currentUser && (
+          <EditPhotoModal
+            photo={editingPhoto}
+            onClose={() => setEditingPhoto(null)}
+            onSave={async (id, updatedFields) => {
+              await updatePhoto(id, updatedFields);
+              setEditingPhoto(null);
+            }}
+            availableCategories={allCategories}
           />
         )}
 

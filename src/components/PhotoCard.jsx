@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { MapPin, Camera, Maximize2, Trash2 } from 'lucide-react';
+import { MapPin, Camera, Maximize2, Trash2, Pencil } from 'lucide-react';
 import TiltCard from './TiltCard';
 import LikeButton from './LikeButton';
+import { getFilterClass } from '../utils/filterPresets';
 
 export default function PhotoCard({
   photo,
   onOpenLightbox,
   onDelete,
+  onEdit,
   layoutMode,
   isLiked,
   onToggleLike,
@@ -16,6 +18,7 @@ export default function PhotoCard({
 
   // Support both Firebase (url) and static data (src) for safety
   const imgSrc = photo.url || photo.src;
+  const filterClass = getFilterClass(photo.filterPreset);
 
   return (
     <TiltCard
@@ -49,20 +52,34 @@ export default function PhotoCard({
             alt={photo.title}
             loading="lazy"
             onLoad={() => setImageLoaded(true)}
-            className={`w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 ${
+            className={`w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 ${filterClass} ${
               imageLoaded ? 'opacity-100' : 'opacity-0'
             }`}
           />
         </div>
 
-        {/* Top bar: Category + Delete button (admin only) + Expand */}
+        {/* Top bar: Category + Edit/Delete buttons (admin only) + Expand */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
           <span className="text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/10 shadow-sm">
             {photo.category}
           </span>
 
           <div className="flex items-center gap-1.5">
-            {/* Delete Button (hanya tampil jika pemilik/admin login) */}
+            {/* Edit Button (admin only) */}
+            {isAdmin && onEdit && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onEdit(photo);
+                }}
+                className="p-1.5 rounded-full bg-amber-500/90 hover:bg-amber-500 text-white backdrop-blur-md transition-colors shadow-sm"
+                title="Edit caption, tempat, dan efek foto"
+              >
+                <Pencil className="w-3.5 h-3.5" />
+              </button>
+            )}
+
+            {/* Delete Button (admin only) */}
             {isAdmin && onDelete && (
               <button
                 onClick={(e) => {
@@ -126,6 +143,18 @@ export default function PhotoCard({
             <div className="text-[10px] text-zinc-500">{photo.category}</div>
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
+            {isAdmin && onEdit && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onEdit(photo);
+                }}
+                className="p-1.5 text-zinc-400 hover:text-amber-500 transition-colors"
+                title="Edit foto"
+              >
+                <Pencil className="w-3.5 h-3.5" />
+              </button>
+            )}
             {isAdmin && onDelete && (
               <button
                 onClick={(e) => {

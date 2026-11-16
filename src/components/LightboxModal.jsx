@@ -8,9 +8,11 @@ import {
   Camera, 
   Download, 
   Share2, 
-  Check 
+  Check,
+  Pencil
 } from 'lucide-react';
 import LikeButton from './LikeButton';
+import { getFilterClass } from '../utils/filterPresets';
 
 export default function LightboxModal({
   photo,
@@ -19,6 +21,8 @@ export default function LightboxModal({
   onPrev,
   isLiked,
   onToggleLike,
+  isAdmin = false,
+  onEditPhoto,
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -80,6 +84,21 @@ export default function LightboxModal({
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Edit Photo Button (Admin only) */}
+          {isAdmin && onEditPhoto && (
+            <button
+              onClick={() => {
+                onClose();
+                onEditPhoto(photo);
+              }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/90 hover:bg-amber-500 text-white text-xs font-semibold backdrop-blur transition-all shadow-md active:scale-95"
+              title="Edit caption, tempat, dan efek foto"
+            >
+              <Pencil className="w-3.5 h-3.5" />
+              <span>Edit Foto</span>
+            </button>
+          )}
+
           {/* Share Photo Button */}
           <button
             onClick={handleSharePhoto}
@@ -145,7 +164,7 @@ export default function LightboxModal({
           <img
             src={imgSrc}
             alt={photo.title}
-            className="max-h-full max-w-full object-contain rounded-lg shadow-2xl transition-transform duration-300"
+            className={`max-h-full max-w-full object-contain rounded-lg shadow-2xl transition-all duration-300 ${getFilterClass(photo.filterPreset)}`}
           />
         </div>
 

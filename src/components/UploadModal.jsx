@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { X, Upload, Image, Loader2, AlertTriangle, CheckCircle } from 'lucide-react';
+import { X, Upload, Image, Loader2, AlertTriangle, CheckCircle, Sliders } from 'lucide-react';
 import { compressImageToDataUrl } from '../utils/imageCompressor';
+import { FILTER_PRESETS, getFilterClass } from '../utils/filterPresets';
 
 export default function UploadModal({ onClose, onUpload, availableCategories = [] }) {
   const [file, setFile] = useState(null);
@@ -31,6 +32,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
   const [selectedCategory, setSelectedCategory] = useState(categoryOptions[0] || 'SMP');
   const [isCustomCategory, setIsCustomCategory] = useState(false);
   const [customCategoryName, setCustomCategoryName] = useState('');
+  const [filterPreset, setFilterPreset] = useState('normal');
 
   const [meta, setMeta] = useState({
     title: '',
@@ -121,6 +123,7 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
           ...meta,
           title: meta.title.trim(),
           category: finalCategory,
+          filterPreset,
         },
         (prog) => {
           setProgress(prog);
@@ -192,7 +195,11 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
               </div>
             ) : preview ? (
               <>
-                <img src={preview} alt="preview" className="w-full max-h-48 object-cover" />
+                <img
+                  src={preview}
+                  alt="preview"
+                  className={`w-full max-h-48 object-cover transition-all duration-300 ${getFilterClass(filterPreset)}`}
+                />
                 {!uploading && (
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                     <span className="text-white text-xs font-medium">Klik untuk ganti foto</span>
@@ -221,6 +228,33 @@ export default function UploadModal({ onClose, onUpload, availableCategories = [
               <CheckCircle className="w-3.5 h-3.5" />
               <span>{fileSizeInfo}</span>
             </p>
+          )}
+
+          {/* Filter Preset Options (Hanya muncul jika foto sudah dipilih) */}
+          {preview && (
+            <div>
+              <label className="block text-[11px] font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5 flex items-center gap-1.5">
+                <Sliders className="w-3.5 h-3.5 text-rose-500" />
+                <span>Pilih Efek Filter Visual:</span>
+              </label>
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                {FILTER_PRESETS.map((p) => (
+                  <button
+                    type="button"
+                    key={p.id}
+                    disabled={uploading}
+                    onClick={() => setFilterPreset(p.id)}
+                    className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold shrink-0 transition-all ${
+                      filterPreset === p.id
+                        ? 'bg-rose-500 text-white shadow-sm scale-105'
+                        : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700'
+                    }`}
+                  >
+                    <span>{p.icon} {p.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
 
           {/* Title */}
