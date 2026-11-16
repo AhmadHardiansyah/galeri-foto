@@ -30,11 +30,10 @@ export default function SplashScreen({ onFinish }) {
   return (
     <div
       onClick={onFinish}
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-zinc-950 text-white select-none transition-all duration-700 cursor-pointer ${
-        fadeState === 'leaving'
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-zinc-950 text-white select-none transition-all duration-700 cursor-pointer ${fadeState === 'leaving'
           ? 'opacity-0 scale-105 pointer-events-none'
           : 'opacity-100 scale-100'
-      }`}
+        }`}
     >
       {/* Background ambient decorative glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -43,11 +42,10 @@ export default function SplashScreen({ onFinish }) {
 
       {/* Main Content */}
       <div
-        className={`relative z-10 px-6 max-w-lg text-center transform transition-all duration-1000 ease-out ${
-          fadeState === 'entering'
+        className={`relative z-10 px-6 max-w-lg text-center transform transition-all duration-1000 ease-out ${fadeState === 'entering'
             ? 'opacity-0 translate-y-6 scale-95'
             : 'opacity-100 translate-y-0 scale-100'
-        }`}
+          }`}
       >
         {/* Subtle mini pill */}
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] uppercase tracking-widest text-rose-400 font-semibold mb-5 shadow-sm">
@@ -60,10 +58,6 @@ export default function SplashScreen({ onFinish }) {
           Welcome to my personal website
         </h1>
 
-        {/* Subtitle */}
-        <p className="mt-3 text-xs sm:text-sm text-zinc-400 font-normal tracking-wide">
-          Ruang kenangan, cerita, dan momen bersama teman & keluarga ✨
-        </p>
 
         {/* Sleek App-style Loading Line */}
         <div className="mt-8 w-44 mx-auto h-[3px] bg-zinc-800 rounded-full overflow-hidden">
