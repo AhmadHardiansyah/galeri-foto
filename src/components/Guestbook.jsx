@@ -64,33 +64,33 @@ export default function Guestbook({
     <div className="max-w-4xl mx-auto px-4 pb-16 space-y-8 animate-fade-in">
       {/* Intro Header */}
       <div className="text-center space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-pink-100 dark:bg-pink-950/40 border border-pink-200 dark:border-pink-800 text-pink-600 dark:text-pink-300 text-xs font-bold shadow-sm">
-          <span>💬</span>
-          <span>Buku Tamu</span>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100/90 dark:bg-amber-950/40 border border-amber-300/70 dark:border-amber-800/60 text-amber-900 dark:text-amber-300 text-xs font-mono font-semibold shadow-sm">
+          <span>📻</span>
+          <span>Buku Tamu & Catatan</span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900 dark:text-[#f7f3ec] tracking-tight">
           Tinggalkan Pesan & Sapaan
         </h2>
-        <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto leading-relaxed">
-          Tulis pesan, kesan, atau sapaan untuk Ahmad di sini. Pesan kamu akan langsung tampil di bawah.
+        <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 max-w-md mx-auto leading-relaxed">
+          Tulis pesan, cerita kenangan, atau sapaan untuk Ahmad di sini. Pesan kamu akan langsung diarsipkan di bawah.
         </p>
       </div>
 
-      {/* Input Message Card Form */}
-      <div className="relative bg-white dark:bg-zinc-900 rounded-3xl p-5 sm:p-7 shadow-xl border border-pink-200/80 dark:border-zinc-800">
+      {/* Input Message Card Form (Vintage Journal Memo Style) */}
+      <div className="relative bg-[#faf6ee] dark:bg-[#1a1613] rounded-3xl p-5 sm:p-7 shadow-xl border border-[#ded3c2] dark:border-stone-800">
         <form onSubmit={handleSubmit} className="space-y-4 pt-1">
           {/* Name Input */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
-                <span>Nama:</span>
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300 flex items-center gap-1.5 font-mono">
+                <span>Nama Pengirim:</span>
               </label>
-              <label className="flex items-center gap-1.5 text-[11px] font-medium text-pink-600 dark:text-pink-400 cursor-pointer select-none">
+              <label className="flex items-center gap-1.5 text-[11px] font-medium text-amber-800 dark:text-amber-400 cursor-pointer select-none font-mono">
                 <input
                   type="checkbox"
                   checked={isAnonymous}
                   onChange={(e) => setIsAnonymous(e.target.checked)}
-                  className="rounded text-pink-500 focus:ring-pink-500 h-3.5 w-3.5 accent-pink-500"
+                  className="rounded text-amber-700 focus:ring-amber-600 h-3.5 w-3.5 accent-amber-700"
                 />
                 <span>Kirim sebagai Anonim</span>
               </label>
@@ -101,14 +101,14 @@ export default function Guestbook({
               value={isAnonymous ? 'Anonim' : name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Nama kamu..."
-              className="w-full px-4 py-2.5 text-xs rounded-2xl border border-pink-200 dark:border-zinc-700 bg-pink-50/40 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-pink-400/50 disabled:opacity-60 transition-all shadow-inner"
+              className="w-full px-4 py-2.5 text-xs rounded-2xl border border-[#ded3c2] dark:border-stone-700 bg-white dark:bg-[#12100e] text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-600/40 disabled:opacity-60 transition-all shadow-inner font-sans"
             />
           </div>
 
           {/* Message Textarea */}
           <div>
-            <label className="block text-xs font-bold text-zinc-700 dark:text-zinc-300 mb-1.5">
-              <span>Pesan:</span>
+            <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 mb-1.5 font-mono">
+              <span>Catatan Pesan:</span>
             </label>
             <textarea
               required
@@ -117,7 +117,7 @@ export default function Guestbook({
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Tulis pesan atau sapaan kamu..."
-              className="w-full px-4 py-2.5 text-xs rounded-2xl border border-pink-200 dark:border-zinc-700 bg-pink-50/40 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-pink-400/50 resize-none transition-all shadow-inner"
+              className="w-full px-4 py-2.5 text-xs rounded-2xl border border-[#ded3c2] dark:border-stone-700 bg-white dark:bg-[#12100e] text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-600/40 resize-none transition-all shadow-inner font-sans"
             />
           </div>
 
@@ -125,10 +125,10 @@ export default function Guestbook({
             <button
               type="submit"
               disabled={submitting || !message.trim()}
-              className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 disabled:opacity-50 text-white text-xs font-bold rounded-full shadow-lg shadow-pink-500/25 transition-all transform hover:scale-105 active:scale-95"
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-700 via-orange-700 to-stone-900 hover:from-amber-800 hover:to-black disabled:opacity-50 text-white text-xs font-bold rounded-full shadow-lg shadow-amber-950/25 transition-all transform hover:scale-105 active:scale-95"
             >
-              <Send className="w-3.5 h-3.5" />
-              <span>{submitting ? 'Mengirim...' : 'Kirim Pesan'}</span>
+              <Send className="w-3.5 h-3.5 text-amber-300" />
+              <span>{submitting ? 'Mengirim...' : 'Kirim Catatan'}</span>
             </button>
           </div>
         </form>
@@ -137,9 +137,9 @@ export default function Guestbook({
       {/* Messages List Stream */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-zinc-800 dark:text-zinc-200 flex items-center gap-2">
-            <span>Daftar Pesan Masuk</span>
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-zinc-800 text-pink-600 dark:text-pink-300 font-bold">
+          <h3 className="text-sm font-bold text-stone-800 dark:text-stone-200 flex items-center gap-2 font-mono">
+            <span>Daftar Catatan Masuk</span>
+            <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#ede6dc] dark:bg-stone-800 text-amber-900 dark:text-amber-300 font-bold">
               {messages.length} Pesan
             </span>
           </h3>
@@ -150,18 +150,18 @@ export default function Guestbook({
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="h-28 rounded-3xl bg-pink-50 dark:bg-zinc-800 animate-pulse"
+                className="h-28 rounded-3xl bg-[#ede6dc]/60 dark:bg-stone-800 animate-pulse"
               />
             ))}
           </div>
         ) : messages.length === 0 ? (
-          <div className="py-12 text-center bg-white/70 dark:bg-zinc-900/60 rounded-3xl border border-dashed border-pink-200 dark:border-zinc-800 p-6">
-            <span className="text-3xl block mb-2 text-zinc-400">💬</span>
-            <p className="text-xs font-bold text-zinc-700 dark:text-zinc-300">
-              Belum ada pesan masuk.
+          <div className="py-12 text-center bg-[#faf6ee]/70 dark:bg-[#1a1613]/70 rounded-3xl border border-dashed border-[#ded3c2] dark:border-stone-800 p-6">
+            <span className="text-3xl block mb-2 text-stone-400">📻</span>
+            <p className="text-xs font-bold text-stone-700 dark:text-stone-300">
+              Belum ada catatan yang masuk.
             </p>
-            <p className="text-[11px] text-zinc-500 mt-1">
-              Jadilah yang pertama menulis pesan di atas.
+            <p className="text-[11px] text-stone-500 mt-1 font-mono">
+              Jadilah yang pertama mengisi buku tamu di atas.
             </p>
           </div>
         ) : (
@@ -169,19 +169,19 @@ export default function Guestbook({
             {messages.map((item) => (
               <div
                 key={item.id}
-                className="group relative bg-white dark:bg-zinc-900/90 rounded-3xl p-5 shadow-sm hover:shadow-xl hover:border-pink-400/50 border border-pink-200/70 dark:border-zinc-800/80 transition-all duration-300 space-y-3"
+                className="group relative bg-[#faf6ee] dark:bg-[#1c1815] rounded-3xl p-5 shadow-sm hover:shadow-xl hover:border-amber-600/40 border border-[#ded3c2] dark:border-stone-800/80 transition-all duration-300 space-y-3"
               >
                 {/* Header: Avatar, Name, Relationship, Date */}
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2.5">
-                    <span className="w-8 h-8 rounded-2xl bg-pink-100 dark:bg-zinc-800 flex items-center justify-center text-base shadow-inner">
-                      {item.avatarEmoji || '💬'}
+                    <span className="w-8 h-8 rounded-2xl bg-[#ede6dc] dark:bg-stone-800 flex items-center justify-center text-base shadow-inner">
+                      {item.avatarEmoji || '✉️'}
                     </span>
                     <div>
-                      <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 leading-tight">
+                      <h4 className="text-xs font-bold text-stone-900 dark:text-stone-100 leading-tight">
                         {item.name}
                       </h4>
-                      <span className="inline-block text-[10px] text-pink-500 font-semibold">
+                      <span className="inline-block text-[10px] text-amber-700 dark:text-amber-400 font-mono font-medium">
                         {item.relationship || 'Teman'}
                       </span>
                     </div>
@@ -191,7 +191,7 @@ export default function Guestbook({
                   {isAdmin && (
                     <button
                       onClick={() => onDeleteMessage(item.id)}
-                      className="p-1.5 text-zinc-400 hover:text-red-500 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                      className="p-1.5 text-stone-400 hover:text-red-500 rounded-lg hover:bg-stone-200 dark:hover:bg-stone-800 transition-colors"
                       title="Hapus pesan ini (Admin)"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -200,12 +200,12 @@ export default function Guestbook({
                 </div>
 
                 {/* Message Content */}
-                <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed whitespace-pre-wrap bg-pink-50/40 dark:bg-zinc-800/40 p-3 rounded-2xl border border-pink-100/60 dark:border-zinc-800/60">
+                <p className="text-xs text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-wrap bg-[#f5efe6] dark:bg-[#141210] p-3 rounded-2xl border border-[#ded3c2]/60 dark:border-stone-800">
                   {item.message}
                 </p>
 
                 {/* Footer: Date & Like Counter */}
-                <div className="pt-2 border-t border-pink-100 dark:border-zinc-800/60 flex items-center justify-between text-[10px] text-zinc-400">
+                <div className="pt-2 border-t border-[#ded3c2] dark:border-stone-800 flex items-center justify-between text-[10px] font-mono text-stone-400">
                   <span>{formatDate(item.createdAt)}</span>
 
                   <LikeButton

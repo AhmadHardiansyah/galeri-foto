@@ -8,18 +8,18 @@ export default function Footer() {
   };
 
   return (
-    <footer className="mt-16 border-t border-pink-200/60 dark:border-zinc-800/80 py-8 px-4 text-center text-xs text-zinc-500 dark:text-zinc-500">
-      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="flex items-center justify-center gap-1.5 font-medium text-zinc-600 dark:text-zinc-400">
-          <span>© {new Date().getFullYear()} {fallbackProfile.name} • Galeri Foto & Portofolio</span>
+    <footer className="mt-16 border-t border-[#ded3c2] dark:border-stone-800 py-8 px-4 text-center text-xs text-stone-500">
+      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px]">
+        <p className="flex items-center justify-center gap-1.5 font-medium text-stone-600 dark:text-stone-400">
+          <span>© {new Date().getFullYear()} {fallbackProfile.name} • 35mm Analog Archive</span>
         </p>
 
         <button
           onClick={scrollToTop}
-          className="flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-pink-200/70 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 hover:bg-pink-50 dark:hover:bg-zinc-800 transition-all text-zinc-700 dark:text-zinc-300 font-semibold shadow-sm transform hover:scale-105 active:scale-95"
+          className="flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-[#ded3c2] dark:border-stone-800 bg-[#ede6dc]/80 dark:bg-[#1c1815]/80 hover:bg-[#dfd4c4] dark:hover:bg-stone-800 transition-all text-stone-800 dark:text-stone-200 font-semibold shadow-sm transform hover:scale-105 active:scale-95"
         >
           <span>Ke Atas</span>
-          <ArrowUp className="w-3 h-3" />
+          <ArrowUp className="w-3 h-3 text-amber-700 dark:text-amber-400" />
         </button>
       </div>
     </footer>

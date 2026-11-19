@@ -13,7 +13,8 @@ import {
   Pencil,
   MessageCircle,
   Mail,
-  Heart
+  Heart,
+  Film
 } from 'lucide-react';
 import { profileData as fallbackProfile } from '../data/profile';
 
@@ -74,15 +75,15 @@ export default function Header({
     <header className="relative pt-8 pb-6 px-4 max-w-4xl mx-auto text-center">
       {/* Top Bar */}
       <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center gap-1.5 text-xs tracking-wider uppercase font-bold text-pink-600 dark:text-pink-300 bg-pink-100/80 dark:bg-pink-950/40 px-3.5 py-1.5 rounded-full border border-pink-200 dark:border-pink-800/60 shadow-sm backdrop-blur">
-          <Sparkles className="w-3.5 h-3.5 text-pink-500" />
-          <span>Galeri Pribadi</span>
+        <div className="flex items-center gap-2 text-xs tracking-wider uppercase font-mono font-bold text-amber-900 dark:text-amber-300 bg-amber-100/90 dark:bg-amber-950/50 px-3.5 py-1.5 rounded-full border border-amber-300/70 dark:border-amber-800/60 shadow-sm backdrop-blur">
+          <Film className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+          <span>35mm Visual Archive</span>
         </div>
 
         <div className="flex items-center gap-2">
           {/* Admin Indicator / Login Button */}
           {currentUser ? (
-            <div className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+            <div className="flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-full text-xs font-semibold text-amber-700 dark:text-amber-300 font-mono">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Admin</span>
               <button
@@ -96,7 +97,7 @@ export default function Header({
           ) : (
             <button
               onClick={onOpenLogin}
-              className="p-2 rounded-full border border-pink-200/60 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-500 dark:text-zinc-400 hover:text-pink-500 dark:hover:text-pink-400 hover:scale-105 active:scale-95 transition-all shadow-sm"
+              className="p-2 rounded-full border border-stone-300 dark:border-stone-800 bg-white/80 dark:bg-[#1c1815]/80 text-stone-600 dark:text-stone-400 hover:text-amber-700 dark:hover:text-amber-400 hover:scale-105 active:scale-95 transition-all shadow-sm"
               title="Login Pemilik Galeri"
             >
               <Lock className="w-3.5 h-3.5" />
@@ -106,18 +107,18 @@ export default function Header({
           {/* Share Button */}
           <button
             onClick={handleShare}
-            className="flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-full border border-pink-200/60 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 hover:bg-pink-50 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:scale-105 active:scale-95 transition-all shadow-sm backdrop-blur"
+            className="flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-full border border-stone-300 dark:border-stone-800 bg-white/80 dark:bg-[#1c1815]/80 hover:bg-amber-50 dark:hover:bg-stone-900 text-stone-700 dark:text-stone-300 hover:scale-105 active:scale-95 transition-all shadow-sm backdrop-blur"
             title="Bagikan link web ini"
           >
             {copied ? (
               <>
-                <Check className="w-3.5 h-3.5 text-emerald-500" />
-                <span className="text-emerald-500">Tersalin! ✨</span>
+                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="text-emerald-600">Tersalin!</span>
               </>
             ) : (
               <>
-                <Share2 className="w-3.5 h-3.5 text-pink-500" />
-                <span className="hidden sm:inline">Share Bio</span>
+                <Share2 className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+                <span className="hidden sm:inline">Share</span>
               </>
             )}
           </button>
@@ -125,10 +126,10 @@ export default function Header({
           {/* Theme Toggle */}
           <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="p-2 rounded-full border border-pink-200/60 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-700 dark:text-zinc-300 hover:bg-pink-50 dark:hover:bg-zinc-800 hover:scale-105 active:scale-95 transition-all shadow-sm"
+            className="p-2 rounded-full border border-stone-300 dark:border-stone-800 bg-white/80 dark:bg-[#1c1815]/80 text-stone-700 dark:text-stone-300 hover:bg-amber-50 dark:hover:bg-stone-900 hover:scale-105 active:scale-95 transition-all shadow-sm"
             aria-label="Toggle theme"
           >
-            {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-pink-500" />}
+            {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-700" />}
           </button>
         </div>
       </div>
@@ -141,19 +142,19 @@ export default function Header({
       >
         <div className="relative">
           {/* Animated Glowing Ring Aura */}
-          <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-pink-400 via-rose-400 to-purple-400 opacity-60 blur-md group-hover:opacity-100 transition-opacity" />
+          <div className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-amber-600 via-orange-600 to-amber-700 opacity-50 blur-md group-hover:opacity-90 transition-opacity" />
 
-          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-pink-400 via-rose-400 to-purple-400 shadow-xl shadow-pink-500/20">
+          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-amber-700 via-amber-600 to-stone-800 shadow-xl shadow-amber-950/20">
             <img
               src={profile.avatarUrl}
               alt={profile.name}
-              className="w-full h-full object-cover rounded-full border-2 border-white dark:border-zinc-950 transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-full object-cover rounded-full border-2 border-[#faf7f2] dark:border-[#12100e] transition-transform duration-300 group-hover:scale-105"
             />
           </div>
         </div>
         
         {/* Badge Icon */}
-        <div className="absolute bottom-1 right-1 bg-pink-500 text-white p-1.5 rounded-full shadow-lg border-2 border-white dark:border-zinc-950">
+        <div className="absolute bottom-1 right-1 bg-amber-800 text-amber-100 p-1.5 rounded-full shadow-lg border-2 border-white dark:border-[#12100e]">
           {currentUser ? <Pencil className="w-3.5 h-3.5" /> : <Sparkles className="w-3.5 h-3.5" />}
         </div>
 
@@ -169,34 +170,34 @@ export default function Header({
       {/* Name & Tagline */}
       <div className="space-y-1.5">
         <div className="flex items-center justify-center gap-2">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-stone-900 dark:text-[#f7f3ec]">
             {profile.name}
           </h1>
-          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pink-500 text-white text-[11px] font-bold shadow-sm" title="Verified">
+          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-700 text-white text-[11px] font-bold shadow-sm" title="Verified">
             ✓
           </span>
         </div>
-        <p className="text-xs sm:text-sm font-semibold text-pink-500 dark:text-pink-400">
+        <p className="text-xs sm:text-sm font-mono font-medium text-amber-800 dark:text-amber-400">
           {profile.username ? (profile.username.startsWith('@') ? profile.username : `@${profile.username}`) : ''} {profile.tagline ? `• ${profile.tagline}` : ''}
         </p>
       </div>
 
       {/* Bio text */}
-      <p className="mt-3 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto leading-relaxed">
+      <p className="mt-3 text-xs sm:text-sm text-stone-600 dark:text-stone-400 max-w-md mx-auto leading-relaxed">
         {profile.bio}
       </p>
 
       {/* Location & Status */}
-      <div className="mt-3 flex flex-wrap items-center justify-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
+      <div className="mt-3 flex flex-wrap items-center justify-center gap-3 text-xs text-stone-500 dark:text-stone-400">
         {profile.location && (
-          <span className="flex items-center gap-1 bg-pink-50 dark:bg-zinc-900/80 px-2.5 py-1 rounded-full border border-pink-200/50 dark:border-zinc-800 text-[11px]">
-            <MapPin className="w-3 h-3 text-pink-500" />
+          <span className="flex items-center gap-1.5 bg-[#ede6dc]/80 dark:bg-[#1a1613] px-3 py-1 rounded-full border border-[#ded3c2] dark:border-stone-800 text-[11px] font-mono">
+            <MapPin className="w-3 h-3 text-amber-700 dark:text-amber-400" />
             {profile.location}
           </span>
         )}
         {profile.status && (
-          <span className="flex items-center gap-1.5 bg-pink-50 dark:bg-zinc-900/80 px-3 py-1 rounded-full border border-pink-200/50 dark:border-zinc-800 text-[11px] font-semibold text-zinc-700 dark:text-zinc-300">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="flex items-center gap-1.5 bg-[#ede6dc]/80 dark:bg-[#1a1613] px-3 py-1 rounded-full border border-[#ded3c2] dark:border-stone-800 text-[11px] font-medium text-stone-700 dark:text-stone-300 font-mono">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             {profile.status}
           </span>
         )}
@@ -207,9 +208,9 @@ export default function Header({
         <div className="mt-3">
           <button
             onClick={onEditProfile}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-pink-100 hover:bg-pink-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-pink-700 dark:text-pink-300 border border-pink-300/60 dark:border-zinc-700 transition-all shadow-sm"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-amber-100/90 hover:bg-amber-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-stone-700 transition-all shadow-sm"
           >
-            <Pencil className="w-3.5 h-3.5 text-pink-500" />
+            <Pencil className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
             <span>Edit Profil</span>
           </button>
         </div>
@@ -225,8 +226,8 @@ export default function Header({
             rel="noopener noreferrer"
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-sm ${
               social.primary
-                ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white shadow-pink-500/25'
-                : 'bg-white hover:bg-pink-50 dark:bg-zinc-900/80 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-pink-200/60 dark:border-zinc-700/60'
+                ? 'bg-gradient-to-r from-amber-700 via-orange-700 to-stone-900 hover:from-amber-800 hover:to-black text-white shadow-amber-900/25'
+                : 'bg-white hover:bg-amber-50/80 dark:bg-[#1a1613] dark:hover:bg-[#231e1a] text-stone-800 dark:text-stone-200 border border-[#dfd4c4] dark:border-stone-800'
             }`}
           >
             {renderIcon(social.icon)}
@@ -235,19 +236,19 @@ export default function Header({
         ))}
       </div>
 
-      {/* Clean Stats pill counter */}
-      <div className="mt-7 pt-5 border-t border-pink-200/60 dark:border-zinc-800/70 grid grid-cols-3 max-w-xs mx-auto text-center divide-x divide-pink-200 dark:divide-zinc-800 bg-white/70 dark:bg-zinc-900/70 rounded-2xl py-3 border border-pink-100 dark:border-zinc-800/50 shadow-sm backdrop-blur">
+      {/* Vintage Stats Counter Bar */}
+      <div className="mt-7 pt-5 border-t border-[#dfd4c4] dark:border-stone-800/80 grid grid-cols-3 max-w-xs mx-auto text-center divide-x divide-[#dfd4c4] dark:divide-stone-800 bg-[#ede6dc]/70 dark:bg-[#1c1815]/80 rounded-2xl py-3 border border-[#ded3c2] dark:border-stone-800/80 shadow-sm backdrop-blur">
         <div>
-          <div className="text-base font-extrabold text-pink-600 dark:text-pink-400">{totalPhotos}</div>
-          <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Foto</div>
+          <div className="text-base font-extrabold font-mono text-amber-800 dark:text-amber-400">{totalPhotos}</div>
+          <div className="text-[9px] font-bold font-mono uppercase tracking-wider text-stone-500 dark:text-stone-400">Foto</div>
         </div>
         <div>
-          <div className="text-base font-extrabold text-rose-500 dark:text-rose-400">{totalLikes}</div>
-          <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Suka</div>
+          <div className="text-base font-extrabold font-mono text-amber-700 dark:text-amber-300">{totalLikes}</div>
+          <div className="text-[9px] font-bold font-mono uppercase tracking-wider text-stone-500 dark:text-stone-400">Suka</div>
         </div>
         <div>
-          <div className="text-base font-extrabold text-purple-600 dark:text-purple-400">Album</div>
-          <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Kenangan</div>
+          <div className="text-base font-extrabold font-mono text-stone-800 dark:text-stone-300">Roll</div>
+          <div className="text-[9px] font-bold font-mono uppercase tracking-wider text-stone-500 dark:text-stone-400">Kenangan</div>
         </div>
       </div>
     </header>

@@ -27,7 +27,7 @@ export default function PhotoCard({
       className="group relative"
       onClick={() => onOpenLightbox(photo)}
     >
-      <div className="relative cursor-pointer overflow-hidden rounded-3xl bg-white dark:bg-zinc-900 border border-pink-200/60 dark:border-zinc-800/80 shadow-sm hover:shadow-2xl hover:border-pink-400/60 transition-all duration-300">
+      <div className="relative cursor-pointer overflow-hidden rounded-2xl bg-[#faf6ee] dark:bg-[#1a1613] border border-[#ded3c2] dark:border-stone-800 shadow-sm hover:shadow-2xl hover:border-amber-700/50 transition-all duration-300">
         {/* Aspect ratio container */}
         <div
           className={`w-full overflow-hidden ${
@@ -40,10 +40,10 @@ export default function PhotoCard({
               : 'aspect-square'
           }`}
         >
-          {/* Skeleton loader with cute shimmer */}
+          {/* Skeleton loader with vintage pulse */}
           {!imageLoaded && (
-            <div className="w-full h-full bg-pink-50 dark:bg-zinc-800/80 animate-pulse flex items-center justify-center">
-              <Camera className="w-6 h-6 text-pink-300 opacity-60" />
+            <div className="w-full h-full bg-[#f0e9df] dark:bg-stone-800 animate-pulse flex items-center justify-center">
+              <Camera className="w-6 h-6 text-stone-400 opacity-60" />
             </div>
           )}
 
@@ -60,7 +60,7 @@ export default function PhotoCard({
 
         {/* Top bar: Category + Edit/Delete buttons (admin only) + Expand */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-          <span className="text-[10px] font-bold tracking-wider px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white shadow-sm border border-white/20">
+          <span className="text-[10px] font-mono tracking-wider px-2.5 py-1 rounded-full bg-stone-950/85 backdrop-blur-md text-amber-300 shadow-sm border border-amber-600/30">
             {photo.category}
           </span>
 
@@ -72,7 +72,7 @@ export default function PhotoCard({
                   e.stopPropagation();
                   onEdit(photo);
                 }}
-                className="p-1.5 rounded-full bg-amber-500/90 hover:bg-amber-500 text-white backdrop-blur-md transition-colors shadow-sm"
+                className="p-1.5 rounded-full bg-amber-600 hover:bg-amber-700 text-white backdrop-blur-md transition-colors shadow-sm"
                 title="Edit caption, tempat, dan efek foto"
               >
                 <Pencil className="w-3.5 h-3.5" />
@@ -86,7 +86,7 @@ export default function PhotoCard({
                   e.stopPropagation();
                   onDelete(photo);
                 }}
-                className="p-1.5 rounded-full bg-red-600/85 hover:bg-red-600 text-white backdrop-blur-md transition-colors shadow-sm"
+                className="p-1.5 rounded-full bg-red-700 hover:bg-red-800 text-white backdrop-blur-md transition-colors shadow-sm"
                 title="Hapus foto ini"
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -95,7 +95,7 @@ export default function PhotoCard({
 
             {/* Expand icon */}
             <button
-              className="p-1.5 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/10 hover:bg-black/80 transition-colors shadow-sm pointer-events-none"
+              className="p-1.5 rounded-full bg-black/60 backdrop-blur-md text-stone-200 border border-white/10 hover:bg-black/80 transition-colors shadow-sm pointer-events-none"
               title="Perbesar foto"
             >
               <Maximize2 className="w-3.5 h-3.5" />
@@ -104,13 +104,13 @@ export default function PhotoCard({
         </div>
 
         {/* Bottom overlay: Title + Location + Like (Desktop hover) */}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 flex flex-col justify-end text-white opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-10">
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent p-4 flex flex-col justify-end text-white opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-10">
           <div className="flex items-center justify-between gap-2">
             <div className="min-w-0">
-              <h3 className="text-sm font-bold truncate drop-shadow-sm">{photo.title}</h3>
+              <h3 className="text-sm font-bold truncate drop-shadow-sm font-sans">{photo.title}</h3>
               {photo.location && (
-                <p className="flex items-center gap-1 text-[11px] text-pink-200 mt-0.5 truncate">
-                  <MapPin className="w-3 h-3 text-pink-400 shrink-0" />
+                <p className="flex items-center gap-1 text-[11px] text-amber-200/90 mt-0.5 truncate font-mono">
+                  <MapPin className="w-3 h-3 text-amber-400 shrink-0" />
                   <span>{photo.location}</span>
                 </p>
               )}
@@ -120,27 +120,27 @@ export default function PhotoCard({
             <LikeButton
               isLiked={isLiked}
               onToggle={() => onToggleLike(photo.id)}
-              className="bg-black/50 backdrop-blur-md text-white hover:bg-black/70"
+              className="bg-stone-900/70 backdrop-blur-md text-white hover:bg-stone-900"
             />
           </div>
 
           {/* Camera info */}
           {photo.camera && (
-            <div className="mt-2 pt-2 border-t border-white/10 flex items-center justify-between text-[10px] text-zinc-300">
+            <div className="mt-2 pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-stone-300">
               <span className="flex items-center gap-1">
-                <Camera className="w-3 h-3 text-pink-300" />
+                <Camera className="w-3 h-3 text-amber-400" />
                 <span>{photo.camera}</span>
               </span>
-              <span className="text-pink-300">{(photo.likes || 0) + (isLiked ? 1 : 0)} suka</span>
+              <span className="text-amber-400">{(photo.likes || 0) + (isLiked ? 1 : 0)} suka</span>
             </div>
           )}
         </div>
 
         {/* Mobile bottom bar */}
-        <div className="sm:hidden px-3.5 py-2.5 flex items-center justify-between bg-white dark:bg-zinc-900 border-t border-pink-100 dark:border-zinc-800/60">
+        <div className="sm:hidden px-3.5 py-2.5 flex items-center justify-between bg-[#faf6ee] dark:bg-[#1a1613] border-t border-[#ded3c2] dark:border-stone-800">
           <div className="truncate mr-2">
-            <div className="text-xs font-bold text-zinc-800 dark:text-zinc-200 truncate">{photo.title}</div>
-            <div className="text-[10px] font-semibold text-pink-500">{photo.category}</div>
+            <div className="text-xs font-bold text-stone-800 dark:text-stone-200 truncate">{photo.title}</div>
+            <div className="text-[10px] font-mono font-medium text-amber-700 dark:text-amber-400">{photo.category}</div>
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             {isAdmin && onEdit && (

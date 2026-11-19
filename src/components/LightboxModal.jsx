@@ -193,7 +193,7 @@ export default function LightboxModal({
         <div className="w-full lg:w-80 p-5 sm:p-6 flex flex-col justify-between bg-zinc-900 text-zinc-100 overflow-y-auto">
           <div className="space-y-4">
             <div>
-              <span className="text-[10px] uppercase font-bold tracking-wider text-rose-400">
+              <span className="text-[10px] uppercase font-mono font-bold tracking-wider text-amber-400">
                 {photo.category}
               </span>
               <h2 className="text-xl font-extrabold tracking-tight mt-1 text-white">
@@ -202,28 +202,28 @@ export default function LightboxModal({
             </div>
 
             {photo.description && (
-              <p className="text-sm text-zinc-300 leading-relaxed">
+              <p className="text-sm text-stone-300 leading-relaxed">
                 {photo.description}
               </p>
             )}
 
             {/* Metadata list */}
-            <div className="space-y-2.5 pt-3 border-t border-zinc-800 text-xs text-zinc-400">
+            <div className="space-y-2.5 pt-3 border-t border-zinc-800 text-xs text-stone-400 font-mono">
               {photo.location && (
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-rose-400 shrink-0" />
+                  <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
                   <span>{photo.location}</span>
                 </div>
               )}
               {photo.camera && (
                 <div className="flex items-center gap-2">
-                  <Camera className="w-4 h-4 text-zinc-400 shrink-0" />
+                  <Camera className="w-4 h-4 text-amber-400/80 shrink-0" />
                   <span>{photo.camera}</span>
                 </div>
               )}
               {photo.date && (
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-zinc-400 shrink-0" />
+                  <Calendar className="w-4 h-4 text-stone-400 shrink-0" />
                   <span>{photo.date}</span>
                 </div>
               )}
@@ -238,7 +238,7 @@ export default function LightboxModal({
               onToggle={() => onToggleLike(photo.id)}
               className={
                 isLiked
-                  ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30'
+                  ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/30'
                   : 'bg-zinc-800 hover:bg-zinc-700 text-zinc-200'
               }
             />

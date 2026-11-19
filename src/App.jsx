@@ -199,12 +199,12 @@ export default function App() {
   const selectedPhoto = selectedPhotoIndex !== null ? filteredPhotos[selectedPhotoIndex] : null;
 
   return (
-    <div className="min-h-screen bg-[#faf7f9] dark:bg-[#0f0d15] text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
-      {/* Background animated cute pastel aurora glow */}
+    <div className="min-h-screen bg-[#faf7f2] dark:bg-[#12100e] text-stone-900 dark:text-stone-100 transition-colors duration-300">
+      {/* Background warm film ambient glow */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
-        <div className="absolute -top-32 -left-20 w-[550px] h-[550px] bg-gradient-to-tr from-pink-400/20 via-rose-300/15 to-transparent blur-[140px] rounded-full animate-aurora-1" />
-        <div className="absolute top-1/4 -right-24 w-[600px] h-[600px] bg-gradient-to-bl from-purple-400/20 via-indigo-300/15 to-transparent blur-[150px] rounded-full animate-aurora-2" />
-        <div className="absolute -bottom-32 left-1/3 w-[650px] h-[450px] bg-gradient-to-t from-pink-300/15 via-amber-200/10 to-transparent blur-[150px] rounded-full animate-pulse-glow" />
+        <div className="absolute -top-32 -left-20 w-[550px] h-[550px] bg-gradient-to-tr from-amber-600/10 via-orange-500/10 to-transparent blur-[140px] rounded-full animate-aurora-1" />
+        <div className="absolute top-1/4 -right-24 w-[600px] h-[600px] bg-gradient-to-bl from-amber-700/10 via-stone-800/10 to-transparent blur-[150px] rounded-full animate-aurora-2" />
+        <div className="absolute -bottom-32 left-1/3 w-[650px] h-[450px] bg-gradient-to-t from-orange-500/10 via-amber-300/5 to-transparent blur-[150px] rounded-full animate-pulse-glow" />
       </div>
 
       <div className="relative z-10">
@@ -225,20 +225,20 @@ export default function App() {
         {/* TAB SWITCHER: Galeri Foto VS Buku Tamu VS Musik Favorit */}
         {/* ========================================================================= */}
         <div className="flex justify-center mb-6 px-4">
-          <div className="inline-flex p-1.5 bg-pink-100/70 dark:bg-zinc-900/90 border border-pink-200/80 dark:border-zinc-800 rounded-full shadow-sm backdrop-blur flex-wrap justify-center gap-1.5">
+          <div className="inline-flex p-1.5 bg-[#ede6dc]/80 dark:bg-[#1c1815]/90 border border-[#dfd4c4] dark:border-stone-800/80 rounded-full shadow-sm backdrop-blur flex-wrap justify-center gap-1.5">
             <button
               onClick={() => setActiveTab('gallery')}
               className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95 ${
                 activeTab === 'gallery'
-                  ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 text-white shadow-md shadow-pink-500/25 scale-100'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-300'
+                  ? 'bg-gradient-to-r from-amber-800 via-amber-900 to-stone-900 text-[#fcfaf7] shadow-md shadow-amber-950/30 scale-100'
+                  : 'text-stone-600 dark:text-stone-400 hover:text-amber-800 dark:hover:text-amber-300'
               }`}
             >
-              <span>📸 Galeri</span>
+              <span>🎞️ Galeri Foto</span>
               <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                 activeTab === 'gallery'
                   ? 'bg-white/20 text-white'
-                  : 'bg-pink-200/70 dark:bg-zinc-800 text-pink-700 dark:text-pink-300'
+                  : 'bg-amber-200/60 dark:bg-stone-800 text-amber-900 dark:text-amber-300'
               }`}>
                 {photos.length}
               </span>
@@ -248,12 +248,12 @@ export default function App() {
               onClick={() => setActiveTab('guestbook')}
               className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95 ${
                 activeTab === 'guestbook'
-                  ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 text-white shadow-md shadow-pink-500/25 scale-100'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-300'
+                  ? 'bg-gradient-to-r from-amber-800 via-amber-900 to-stone-900 text-[#fcfaf7] shadow-md shadow-amber-950/30 scale-100'
+                  : 'text-stone-600 dark:text-stone-400 hover:text-amber-800 dark:hover:text-amber-300'
               }`}
             >
-              <span>💬 Buku Tamu</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-pink-500 text-white">
+              <span>📻 Buku Tamu</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full font-bold bg-amber-700 text-white">
                 {guestMessages.length}
               </span>
             </button>
@@ -262,11 +262,11 @@ export default function App() {
               onClick={() => setActiveTab('music')}
               className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95 ${
                 activeTab === 'music'
-                  ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 text-white shadow-md shadow-pink-500/25 scale-100'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-300'
+                  ? 'bg-gradient-to-r from-amber-800 via-amber-900 to-stone-900 text-[#fcfaf7] shadow-md shadow-amber-950/30 scale-100'
+                  : 'text-stone-600 dark:text-stone-400 hover:text-amber-800 dark:hover:text-amber-300'
               }`}
             >
-              <span>🎵 Musik Favorit</span>
+              <span>📼 Musik & Band</span>
             </button>
           </div>
         </div>
@@ -281,10 +281,10 @@ export default function App() {
               <div className="flex justify-center mb-5">
                 <button
                   onClick={() => setShowUploadModal(true)}
-                  className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white text-xs font-bold rounded-full shadow-lg shadow-pink-500/25 transition-all duration-200 transform hover:scale-105 active:scale-95"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-700 via-orange-700 to-stone-900 hover:from-amber-800 hover:to-stone-950 text-white text-xs font-bold rounded-full shadow-lg shadow-amber-950/25 transition-all duration-200 transform hover:scale-105 active:scale-95 border border-amber-600/30"
                 >
-                  <Upload className="w-4 h-4" />
-                  <span>+ Upload Foto Baru</span>
+                  <Upload className="w-4 h-4 text-amber-300" />
+                  <span>+ Upload Foto Baru (Admin)</span>
                 </button>
               </div>
             )}
