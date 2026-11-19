@@ -5,9 +5,90 @@ export const musicProfile = {
   headline: "Musik & Band Favorit",
   bio: "Koleksi band dan musisi yang selalu menemani perjalanan saya — dari indie folk, pop rock nostalgia, sampai melodic skatepunk.",
   spotifyProfileUrl: "https://open.spotify.com",
-  // Playlist Spotify embed (Indonesia Chill & Indie Vibe)
-  spotifyEmbedUrl: "https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator&theme=0",
+  // Playlist Spotify embed default (IndieNesia - Lagu Indie & Rock Indonesia Terfavorit)
+  spotifyEmbedUrl: "https://open.spotify.com/embed/playlist/37i9dQZF1DWV1Pvyf5Zt7g?utm_source=generator&theme=0",
 };
+
+// Preset Player untuk memutar lagu langsung dari band favorit Ahmad
+export const playerPresets = [
+  {
+    id: 'indie-campuran',
+    title: 'IndieNesia (Fourtwnty, Hindia, .Feast, Payung Teduh, dll)',
+    artist: 'Kompilasi Indie Pilihan',
+    badge: 'Playlist Utama',
+    embedUrl: 'https://open.spotify.com/embed/playlist/37i9dQZF1DWV1Pvyf5Zt7g?utm_source=generator&theme=0',
+  },
+  {
+    id: 'fourtwnty-zona',
+    title: 'Zona Nyaman',
+    artist: 'Fourtwnty',
+    badge: 'Fourtwnty',
+    embedUrl: 'https://open.spotify.com/embed/track/2bK2Q1h1wB5vW41V353hYc?utm_source=generator&theme=0',
+  },
+  {
+    id: 'hindia-evaluasi',
+    title: 'Evaluasi',
+    artist: 'Hindia',
+    badge: 'Hindia',
+    embedUrl: 'https://open.spotify.com/embed/track/6Zk020Qb5X62kIccKk1Uv8?utm_source=generator&theme=0',
+  },
+  {
+    id: 'feast-peradaban',
+    title: 'Peradaban',
+    artist: '.Feast',
+    badge: '.Feast',
+    embedUrl: 'https://open.spotify.com/embed/track/5c378e9qf9Y1gKcd2WkXvC?utm_source=generator&theme=0',
+  },
+  {
+    id: 'sheila-dan',
+    title: 'Dan...',
+    artist: 'Sheila on 7',
+    badge: 'Sheila on 7',
+    embedUrl: 'https://open.spotify.com/embed/track/2AUEojpHGbxrqjZ18hGOhU?utm_source=generator&theme=0',
+  },
+  {
+    id: 'payung-akad',
+    title: 'Akad',
+    artist: 'Payung Teduh',
+    badge: 'Payung Teduh',
+    embedUrl: 'https://open.spotify.com/embed/track/4Wj7gGkU2pUvQ4R2CjJ6n1?utm_source=generator&theme=0',
+  },
+  {
+    id: 'raim-komang',
+    title: 'Komang',
+    artist: 'Raim Laode',
+    badge: 'Raim Laode',
+    embedUrl: 'https://open.spotify.com/embed/track/1PtOsQqGz3s8R47kpxs1yU?utm_source=generator&theme=0',
+  },
+  {
+    id: 'dewa-kangen',
+    title: 'Top Hits (Kangen, Pupus, Risalah Hati)',
+    artist: 'Dewa 19',
+    badge: 'Dewa 19',
+    embedUrl: 'https://open.spotify.com/embed/artist/5N1uxmkLq18fQW91lBqY6Z?utm_source=generator&theme=0',
+  },
+  {
+    id: 'standherealone',
+    title: 'Top Hits (Hilang Harapan, Wanita Masih Banyak)',
+    artist: 'Stand Here Alone',
+    badge: 'Stand Here Alone',
+    embedUrl: 'https://open.spotify.com/embed/artist/3YwAgafEWJCd6Haotq7Qd2?utm_source=generator&theme=0',
+  },
+  {
+    id: 'threesixty',
+    title: 'Top Hits (Sampai Nanti, Dewi Semesta)',
+    artist: 'Threesixty Skatepunk',
+    badge: 'Threesixty',
+    embedUrl: 'https://open.spotify.com/embed/artist/2XvYgLqg1gq63U7LhN8E9P?utm_source=generator&theme=0',
+  },
+  {
+    id: 'oasis-hits',
+    title: 'Top Hits (Wonderwall, Don\'t Look Back In Anger)',
+    artist: 'Oasis',
+    badge: 'Oasis',
+    embedUrl: 'https://open.spotify.com/embed/artist/2DaxqgrOhkeH0fpeiQq2f4?utm_source=generator&theme=0',
+  },
+];
 
 export const favoriteBands = [
   {
