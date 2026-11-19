@@ -4,16 +4,17 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // ===== 1. KOLEKSI PHOTOS =====
-    // Siapapun bisa lihat foto
-    // Hanya admin (login) yang bisa upload, edit, dan hapus foto
+    // Siapapun bisa melihat foto dan memberi like (update like count)
+    // Hanya admin yang bisa upload dan hapus foto
     match /photos/{photoId} {
       allow read: if true;
-      allow create, update, delete: if request.auth != null;
+      allow update: if true;
+      allow create, delete: if request.auth != null;
     }
 
     // ===== 2. KOLEKSI SETTINGS (PROFIL & KONFIGURASI) =====
     // Siapapun bisa membaca profil (nama, avatar, bio, medsos)
-    // Hanya admin (login) yang bisa menyimpan / update profil
+    // Hanya admin yang bisa menyimpan / edit profil
     match /settings/{docId} {
       allow read: if true;
       allow write: if request.auth != null;
@@ -21,10 +22,17 @@ service cloud.firestore {
 
     // ===== 3. KOLEKSI GUESTBOOK (BUKU TAMU) =====
     // Siapapun bisa membaca pesan, menulis pesan baru, dan memberi like
-    // Hanya admin (login) yang bisa menghapus pesan
+    // Hanya admin yang bisa menghapus pesan
     match /guestbook/{messageId} {
       allow read, create, update: if true;
       allow delete: if request.auth != null;
+    }
+
+    // ===== 4. KOLEKSI NOTIFICATIONS (NOTIFIKASI AKTIVITAS) =====
+    // Pengunjung bisa membuat notifikasi saat like foto atau kirim pesan
+    // Admin bisa membaca, menandai dibaca, dan menghapus notifikasi
+    match /notifications/{notificationId} {
+      allow read, write: if true;
     }
 
   }

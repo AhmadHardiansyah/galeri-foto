@@ -9,6 +9,7 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  increment,
 } from "firebase/firestore";
 import { db } from "../init";
 
@@ -80,11 +81,39 @@ export const usePhotos = () => {
     await deleteDoc(doc(db, "photos", id));
   }, []);
 
+  // ---------- TOGGLE LIKE & CATAT NOTIFIKASI ----------
+  const toggleLikePhoto = useCallback(async (photo, isCurrentlyLiked) => {
+    if (!photo || !photo.id) return;
+    try {
+      const photoRef = doc(db, "photos", photo.id);
+      const inc = isCurrentlyLiked ? -1 : 1;
+      await updateDoc(photoRef, {
+        likes: increment(inc),
+      });
+
+      // Jika aksi ini adalah memberi like (+1), buat dokumen notifikasi
+      if (!isCurrentlyLiked) {
+        await addDoc(collection(db, "notifications"), {
+          type: "photo_like",
+          photoId: photo.id,
+          photoTitle: photo.title || "Foto Kenangan",
+          photoCategory: photo.category || "Momen",
+          photoUrl: photo.url || photo.src || "",
+          createdAt: new Date(),
+          read: false,
+        });
+      }
+    } catch (err) {
+      console.warn("Gagal update like atau notifikasi ke Firestore:", err);
+    }
+  }, []);
+
   return {
     photos,
     loading,
     createPhoto,
     updatePhoto,
     deletePhoto,
+    toggleLikePhoto,
   };
 };

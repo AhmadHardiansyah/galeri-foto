@@ -14,7 +14,8 @@ import {
   MessageCircle,
   Mail,
   Heart,
-  Film
+  Film,
+  Bell
 } from 'lucide-react';
 import { profileData as fallbackProfile } from '../data/profile';
 
@@ -28,6 +29,8 @@ export default function Header({
   onLogout,
   profile: propProfile,
   onEditProfile,
+  onOpenNotifications,
+  unreadCount = 0,
 }) {
   const [copied, setCopied] = useState(false);
   const profile = propProfile || fallbackProfile;
@@ -81,6 +84,22 @@ export default function Header({
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Notification Bell Button */}
+          {currentUser && onOpenNotifications && (
+            <button
+              onClick={onOpenNotifications}
+              className="relative p-2 rounded-full border border-stone-300 dark:border-stone-800 bg-white/80 dark:bg-[#1c1815]/80 text-stone-700 dark:text-stone-300 hover:bg-amber-50 dark:hover:bg-stone-900 hover:text-amber-800 dark:hover:text-amber-400 hover:scale-105 active:scale-95 transition-all shadow-sm"
+              title="Notifikasi Aktivitas (Likes & Pesan)"
+            >
+              <Bell className="w-3.5 h-3.5" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[17px] h-[17px] px-1 text-[9px] font-mono font-bold text-white bg-rose-600 rounded-full shadow-sm animate-pulse">
+                  {unreadCount > 9 ? '9+' : unreadCount}
+                </span>
+              )}
+            </button>
+          )}
+
           {/* Admin Indicator / Login Button */}
           {currentUser ? (
             <div className="flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-full text-xs font-semibold text-amber-700 dark:text-amber-300 font-mono">

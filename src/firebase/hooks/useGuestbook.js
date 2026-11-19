@@ -41,7 +41,7 @@ export const useGuestbook = () => {
 
   // Tambah pesan baru ke buku tamu
   const addMessage = useCallback(async ({ name, relationship, message, avatarEmoji }) => {
-    await addDoc(collection(db, 'guestbook'), {
+    const docRef = await addDoc(collection(db, 'guestbook'), {
       name: name.trim() || 'Teman Anonim',
       relationship: relationship || 'Teman',
       message: message.trim(),
@@ -49,6 +49,20 @@ export const useGuestbook = () => {
       likes: 0,
       createdAt: new Date(),
     });
+
+    // Catat notifikasi pesan baru untuk Admin
+    try {
+      await addDoc(collection(db, 'notifications'), {
+        type: 'guestbook_message',
+        senderName: name.trim() || 'Teman',
+        messagePreview: message.trim().slice(0, 80),
+        guestbookId: docRef.id,
+        createdAt: new Date(),
+        read: false,
+      });
+    } catch (err) {
+      console.warn('Gagal mencatat notifikasi buku tamu:', err);
+    }
   }, []);
 
   // Hapus pesan (khusus Admin jika ada spam)

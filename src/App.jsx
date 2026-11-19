@@ -11,14 +11,16 @@ import SplashScreen from './components/SplashScreen';
 import Guestbook from './components/Guestbook';
 import FavoriteMusic from './components/FavoriteMusic';
 import Footer from './components/Footer';
+import NotificationModal from './components/NotificationModal';
 import { ImageOff, Upload, Camera, MessageCircle, Music } from 'lucide-react';
 import { usePhotos } from './firebase/hooks/usePhotos';
 import { useProfile } from './firebase/hooks/useProfile';
 import { useGuestbook } from './firebase/hooks/useGuestbook';
+import { useNotifications } from './firebase/hooks/useNotifications';
 import { auth, onAuthStateChanged, logoutAdmin } from './firebase/init';
 
 export default function App() {
-  const { photos, loading: photosLoading, createPhoto, updatePhoto, deletePhoto } = usePhotos();
+  const { photos, loading: photosLoading, createPhoto, updatePhoto, deletePhoto, toggleLikePhoto } = usePhotos();
   const { profile, updateProfile } = useProfile();
   const {
     messages: guestMessages,
@@ -27,6 +29,14 @@ export default function App() {
     deleteMessage: deleteGuestMessage,
     likeMessage: likeGuestMessage,
   } = useGuestbook();
+  const {
+    notifications,
+    unreadCount,
+    markAsRead,
+    markAllAsRead,
+    deleteNotification,
+    clearAllNotifications,
+  } = useNotifications();
 
   // Tab State: 'gallery' | 'guestbook'
   const [activeTab, setActiveTab] = useState('gallery');
@@ -43,6 +53,7 @@ export default function App() {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+  const [showNotificationsModal, setShowNotificationsModal] = useState(false);
   const [editingPhoto, setEditingPhoto] = useState(null);
   const [uploading, setUploading] = useState(false);
 
@@ -88,15 +99,22 @@ export default function App() {
     }
   }, [isDarkMode]);
 
-  // Handle like toggle (stored in localStorage)
+  // Handle like toggle (stored in localStorage & sync to Firestore + create notification)
   const handleToggleLike = (photoId) => {
+    const isCurrentlyLiked = !!likedPhotos[photoId];
     setLikedPhotos((prev) => {
-      const updated = { ...prev, [photoId]: !prev[photoId] };
+      const updated = { ...prev, [photoId]: !isCurrentlyLiked };
       try {
         localStorage.setItem('bio_gallery_likes', JSON.stringify(updated));
       } catch (e) { /* ignored */ }
       return updated;
     });
+
+    // Update Firestore like count & buat notifikasi jika baru memberi like
+    const targetPhoto = photos.find((p) => p.id === photoId);
+    if (targetPhoto && toggleLikePhoto) {
+      toggleLikePhoto(targetPhoto, isCurrentlyLiked);
+    }
   };
 
   // Handle upload from modal form
@@ -196,6 +214,22 @@ export default function App() {
     setSelectedPhotoIndex((prev) => (prev - 1 + filteredPhotos.length) % filteredPhotos.length);
   };
 
+  // Buka foto dari ID notifikasi
+  const handleOpenPhotoById = (photoId) => {
+    setActiveTab('gallery');
+    const idx = filteredPhotos.findIndex((p) => p.id === photoId);
+    if (idx !== -1) {
+      setSelectedPhotoIndex(idx);
+    } else {
+      setActiveCategory('Semua');
+      setSearchQuery('');
+      setTimeout(() => {
+        const i = normalizedPhotos.findIndex((p) => p.id === photoId);
+        if (i !== -1) setSelectedPhotoIndex(i);
+      }, 50);
+    }
+  };
+
   const selectedPhoto = selectedPhotoIndex !== null ? filteredPhotos[selectedPhotoIndex] : null;
 
   return (
@@ -219,6 +253,8 @@ export default function App() {
           onLogout={logoutAdmin}
           profile={profile}
           onEditProfile={() => setShowEditProfileModal(true)}
+          onOpenNotifications={() => setShowNotificationsModal(true)}
+          unreadCount={unreadCount}
         />
 
         {/* ========================================================================= */}
@@ -448,6 +484,20 @@ export default function App() {
             availableCategories={allCategories}
           />
         )}
+
+        {/* Notification Modal (Admin Activity Feed) */}
+        <NotificationModal
+          isOpen={showNotificationsModal}
+          onClose={() => setShowNotificationsModal(false)}
+          notifications={notifications}
+          unreadCount={unreadCount}
+          onMarkAsRead={markAsRead}
+          onMarkAllAsRead={markAllAsRead}
+          onDeleteNotification={deleteNotification}
+          onClearAll={clearAllNotifications}
+          onOpenPhotoById={handleOpenPhotoById}
+          onOpenGuestbook={() => setActiveTab('guestbook')}
+        />
 
         <Footer />
 
