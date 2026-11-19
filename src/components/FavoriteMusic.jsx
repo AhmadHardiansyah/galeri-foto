@@ -9,11 +9,10 @@ import {
   Sparkles,
 } from 'lucide-react';
 import TiltCard from './TiltCard';
-import { musicProfile, favoriteBands, favoriteTracks, playerPresets } from '../data/favoriteMusic';
+import { musicProfile, favoriteBands, favoriteTracks } from '../data/favoriteMusic';
 
 export default function FavoriteMusic() {
-  const [filter, setFilter] = useState('all'); // 'all' | 'bands' | 'tracks' | 'playlist'
-  const [activePreset, setActivePreset] = useState(playerPresets[0]);
+  const [filter, setFilter] = useState('all'); // 'all' | 'bands' | 'tracks'
 
   return (
     <div className="max-w-5xl mx-auto px-4 pb-16 animate-fade-in">
@@ -87,17 +86,6 @@ export default function FavoriteMusic() {
         >
           <Flame className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
           <span>Lagu On Repeat ({favoriteTracks.length})</span>
-        </button>
-        <button
-          onClick={() => setFilter('playlist')}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95 ${
-            filter === 'playlist'
-              ? 'bg-gradient-to-r from-amber-800 via-amber-900 to-stone-900 text-[#fcfaf7] shadow-md shadow-amber-950/25'
-              : 'bg-white/80 dark:bg-[#1c1815]/80 text-stone-700 dark:text-stone-300 hover:bg-[#ede6dc] dark:hover:bg-stone-900 border border-[#ded3c2] dark:border-stone-800/80'
-          }`}
-        >
-          <Headphones className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-          <span>Playlist Player</span>
         </button>
       </div>
 
@@ -241,78 +229,6 @@ export default function FavoriteMusic() {
                 </a>
               </div>
             ))}
-          </div>
-        </section>
-      )}
-
-      {/* SECTION 3: SPOTIFY EMBEDDED PLAYLIST PLAYER DARI BAND FAVORIT */}
-      {(filter === 'all' || filter === 'playlist') && (
-        <section>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-lg">🎧</span>
-              <div>
-                <h3 className="text-base font-bold text-stone-900 dark:text-[#f7f3ec] font-sans">
-                  Spotify Playlist Player
-                </h3>
-                <p className="text-[11px] font-mono text-stone-500 dark:text-stone-400">
-                  Pilih band atau lagu favoritmu di bawah untuk langsung diputar di player
-                </p>
-              </div>
-            </div>
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-amber-700 dark:text-amber-400 font-bold self-start sm:self-auto bg-amber-100/70 dark:bg-amber-950/40 px-3 py-1 rounded-full border border-amber-300/60 dark:border-amber-800/60">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Memutar: {activePreset?.artist}</span>
-            </span>
-          </div>
-
-          {/* Preset Pill Selector untuk Semua Band Favorit Ahmad */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4 scrollbar-none no-scrollbar">
-            {playerPresets.map((preset) => {
-              const isActive = activePreset?.id === preset.id;
-              return (
-                <button
-                  key={preset.id}
-                  onClick={() => setActivePreset(preset)}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono whitespace-nowrap transition-all duration-200 transform hover:scale-105 active:scale-95 ${
-                    isActive
-                      ? 'bg-gradient-to-r from-amber-800 via-amber-900 to-stone-900 text-[#fcfaf7] shadow-md shadow-amber-950/25 font-bold border border-amber-600/40'
-                      : 'bg-[#faf6ee] dark:bg-[#1a1613] text-stone-700 dark:text-stone-300 hover:bg-[#ede6dc] dark:hover:bg-stone-800 border border-[#ded3c2] dark:border-stone-800'
-                  }`}
-                >
-                  <Disc className={`w-3.5 h-3.5 ${isActive ? 'text-amber-400 animate-spin-slow' : 'text-stone-400'}`} />
-                  <span>{preset.badge}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Spotify Player Container */}
-          <div className="rounded-3xl overflow-hidden shadow-2xl border border-[#ded3c2] dark:border-stone-800 bg-[#12100e] relative group">
-            <div className="px-5 py-3 bg-[#1c1815] border-b border-stone-800 flex items-center justify-between text-xs font-mono">
-              <div className="flex items-center gap-2 truncate text-stone-300">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
-                <span className="truncate">
-                  <strong className="text-amber-400">{activePreset?.artist}</strong> — {activePreset?.title}
-                </span>
-              </div>
-              <span className="text-[10px] text-stone-500 shrink-0 ml-2 hidden sm:inline">
-                Spotify Player Official
-              </span>
-            </div>
-
-            <iframe
-              key={activePreset?.id}
-              style={{ borderRadius: '0px 0px 24px 24px' }}
-              src={activePreset?.embedUrl || musicProfile.spotifyEmbedUrl}
-              width="100%"
-              height="352"
-              frameBorder="0"
-              allowFullScreen=""
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-              title={`Spotify Player - ${activePreset?.title}`}
-            />
           </div>
         </section>
       )}
